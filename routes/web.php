@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\EmployeeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +27,11 @@ Route::middleware('auth')->controller(AdminController::class)->group(function ()
     Route::post('/admin/profile/store', 'AdminProfileStore')->name('admin.profile.store');
     Route::get('/change/password', 'ChangePassword')->name('change.password');
     Route::post('/update/password', 'UpdatePassword')->name('update.password');
+});
+
+Route::controller(EmployeeController::class)->group(function () {
+    Route::get('/all/employee', 'AllEmployee')->name('all.employee');
+    Route::get('/add/employee', 'AddEmployee')->name('add.employee');
 });
 
 require __DIR__.'/auth.php';
