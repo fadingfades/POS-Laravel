@@ -74,6 +74,24 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="#salary" data-bs-toggle="collapse">
+                        <i class="mdi mdi-email-multiple-outline"></i>
+                        <span> Employee Salary </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="salary">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('all.advance.salary') }}">All Advance Salary</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('add.advance.salary') }}">Add Advance Salary</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 <li class="menu-title mt-2">Custom</li>
 
                 <li>

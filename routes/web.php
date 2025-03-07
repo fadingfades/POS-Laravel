@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\SupplierController;
+use App\Http\Controllers\Backend\SalaryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,6 +58,14 @@ Route::controller(SupplierController::class)->group(function () {
     Route::post('/update/supplier', 'UpdateSupplier')->name('supplier.update');
     Route::get('/delete/supplier/{id}', 'DeleteSupplier')->name('delete.supplier');
     Route::get('/details/supplier/{id}', 'DetailsSupplier')->name('details.supplier');
+});
+
+Route::controller(SalaryController::class)->group(function () {
+    Route::get('/add/advance/salary', 'AddAdvanceSalary')->name('add.advance.salary');
+    Route::get('/all/advance/salary', 'AllAdvanceSalary')->name('all.advance.salary');
+    Route::post('/advance/salary/store', 'AdvanceSalaryStore')->name('advance.salary.store');
+    Route::get('/edit/advance/salary/{id}', 'EditAdvanceSalary')->name('edit.advance.salary');
+    Route::post('/advance/salary/update', 'AdvanceSalaryUpdate')->name('advance.salary.update');
 });
 
 require __DIR__.'/auth.php';
