@@ -23,6 +23,8 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/logout', 'AdminLogoutPage')->name('admin.logout.page');
     Route::get('/admin/profile', 'AdminProfile')->name('admin.profile');
     Route::post('/admin/profile/store', 'AdminProfileStore')->name('admin.profile.store');
+    Route::get('/change/password', 'ChangePassword')->name('change.password');
+    Route::post('/update/password', 'UpdatePassword')->name('update.password');
 });
 
 require __DIR__.'/auth.php';
