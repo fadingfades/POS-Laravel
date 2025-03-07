@@ -138,4 +138,9 @@ class SupplierController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    public function DetailsSupplier($id){
+        $supplier = Supplier::findOrFail($id);
+        return view('backend.supplier.details_supplier', compact('supplier'));
+    }
 }
