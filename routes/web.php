@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
 Route::controller(AdminController::class)->group(function () {
     Route::get('/admin/logout', 'AdminDestroy')->name('admin.logout');
     Route::get('/logout', 'AdminLogoutPage')->name('admin.logout.page');
+    Route::get('/admin/profile', 'AdminProfile')->name('admin.profile');
+    Route::post('/admin/profile/store', 'AdminProfileStore')->name('admin.profile.store');
 });
 
 require __DIR__.'/auth.php';
