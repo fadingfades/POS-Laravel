@@ -18,9 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(AdminController::class)->group(function () {
-    Route::get('/admin/logout', 'AdminDestroy')->name('admin.logout');
-    Route::get('/logout', 'AdminLogoutPage')->name('admin.logout.page');
+Route::get('/admin/logout', [AdminController::class, 'AdminDestroy'])->name('admin.logout');
+Route::get('/logout', [AdminController::class, 'AdminLogoutPage'])->name('admin.logout.page');
+
+Route::middleware('auth')->controller(AdminController::class)->group(function () {
     Route::get('/admin/profile', 'AdminProfile')->name('admin.profile');
     Route::post('/admin/profile/store', 'AdminProfileStore')->name('admin.profile.store');
     Route::get('/change/password', 'ChangePassword')->name('change.password');
