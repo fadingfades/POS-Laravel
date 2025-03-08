@@ -66,6 +66,10 @@ Route::controller(SalaryController::class)->group(function () {
     Route::post('/advance/salary/store', 'AdvanceSalaryStore')->name('advance.salary.store');
     Route::get('/edit/advance/salary/{id}', 'EditAdvanceSalary')->name('edit.advance.salary');
     Route::post('/advance/salary/update', 'AdvanceSalaryUpdate')->name('advance.salary.update');
+
+    Route::get('/pay/salary', 'PaySalary')->name('pay.salary');
+    Route::get('/pay/now/salary/{id}', 'PayNowSalary')->name('pay.now.salary');
+    Route::post('/employe/salary/store', 'EmployeSalaryStore')->name('employe.salary.store');
 });
 
 require __DIR__.'/auth.php';
