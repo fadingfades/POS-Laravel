@@ -48,13 +48,13 @@
                                             <img src="{{ asset($item->product_image) }}" style="width:50px; height: 40px;">
                                         </td>
                                         <td>{{ $item->product_name }}</td>
-                                        <td>{{ $item->category_id }}</td>
-                                        <td>{{ $item->supplier_id }}</td>
+                                        <td>{{ $item['category']['category_name'] }}</td>
+                                        <td>{{ $item['supllier']['name'] }}</td>
                                         <td>{{ $item->product_code }}</td>
                                         <td>{{ $item->selling_price }}</td>
                                         <td>
-                                            <a href="{{ route('edit.customer', $item->id) }}" class="btn btn-blue rounded-pill waves-effect waves-light">Edit</a>
-                                            <a href="{{ route('delete.customer', $item->id) }}" class="btn btn-danger rounded-pill waves-effect waves-light" id="delete">Delete</a>
+                                            <a href="{{ route('edit.product', $item->id) }}" class="btn btn-blue rounded-pill waves-effect waves-light">Edit</a>
+                                            <a href="{{ route('delete.product', $item->id) }}" class="btn btn-danger rounded-pill waves-effect waves-light" id="delete">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
