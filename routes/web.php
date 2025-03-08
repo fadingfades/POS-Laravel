@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\PosController;
 use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\RoleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -135,6 +136,15 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/complete/order', 'CompleteOrder')->name('complete.order');
     Route::get('/stock', 'StockManage')->name('stock.manage');
     Route::get('/order/invoice-download/{order_id}', 'OrderInvoice');
+});
+
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/all/permission', 'AllPermission')->name('all.permission');
+    Route::get('/add/permission', 'AddPermission')->name('add.permission');
+    Route::post('/store/permission', 'StorePermission')->name('permission.store');
+    Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+    Route::post('/update/permission', 'UpdatePermission')->name('permission.update');
+    Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
 });
 
 require __DIR__.'/auth.php';
