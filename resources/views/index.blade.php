@@ -1,11 +1,22 @@
 @extends('admin_dashboard')
 @section('admin')
 
+@php
+    $date = date('d-F-Y');
+    $today_paid = App\Models\Order::where('order_date', $date)->sum('pay');
+
+    $total_paid = App\Models\Order::sum('pay');
+    $total_due = App\Models\Order::sum('due');
+
+    $completeorder = App\Models\Order::where('order_status', 'complete')->get();
+    $pendingorder = App\Models\Order::where('order_status', 'pending')->get();
+@endphp
+
 <div class="content">
 
     <!-- Start Content-->
     <div class="container-fluid">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -29,8 +40,8 @@
                     <h4 class="page-title">Dashboard</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
 
         <div class="row">
             <div class="col-md-6 col-xl-3">
@@ -44,8 +55,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1">$<span data-plugin="counterup">58,947</span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Total Revenue</p>
+                                    <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ $total_paid }}</span></h3>
+                                    <p class="text-muted mb-1 text-truncate">Total Paid</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -64,8 +75,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span></h3>
-                                    <p class="text-muted mb-1 text-truncate">Today's Sales</p>
+                                    <h3 class="text-dark mt-1">$<span data-plugin="counterup">{{ $total_due }}</span></h3>
+                                    <p class="text-muted mb-1 text-truncate">Total Due</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -84,8 +95,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">0.58</span>%</h3>
-                                    <p class="text-muted mb-1 text-truncate">Conversion</p>
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ count($completeorder) }}</span></h3>
+                                    <p class="text-muted mb-1 text-truncate">Complete Order</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -104,8 +115,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="text-end">
-                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">78.41</span>k</h3>
-                                    <p class="text-muted mb-1 text-truncate">Today's Visits</p>
+                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ count($pendingorder) }}</span></h3>
+                                    <p class="text-muted mb-1 text-truncate">Pending Order</p>
                                 </div>
                             </div>
                         </div> <!-- end row-->
@@ -142,25 +153,9 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="dropdown float-end">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Edit Report</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                            </div>
-                        </div>
-
                         <h4 class="header-title mb-3">Revenue History</h4>
-
                         <div class="table-responsive">
                             <table class="table table-borderless table-nowrap table-hover table-centered m-0">
-
                                 <thead class="table-light">
                                     <tr>
                                         <th>Marketplaces</th>
@@ -172,137 +167,19 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <h5 class="m-0 fw-normal">Themes Market</h5>
-                                        </td>
-
-                                        <td>
-                                            Oct 15, 2018
-                                        </td>
-
-                                        <td>
-                                            $5848.68
-                                        </td>
-
-                                        <td>
-                                            <span class="badge bg-soft-warning text-warning">Upcoming</span>
-                                        </td>
-
-                                        <td>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                        </td>
+                                        <td><h5 class="m-0 fw-normal">Themes Market</h5></td>
+                                        <td>Oct 15, 2018</td>
+                                        <td>$5848.68</td>
+                                        <td><span class="badge bg-soft-warning text-warning">Upcoming</span></td>
+                                        <td><a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a></td>
                                     </tr>
-
                                     <tr>
-                                        <td>
-                                            <h5 class="m-0 fw-normal">Freelance</h5>
-                                        </td>
-
-                                        <td>
-                                            Oct 12, 2018
-                                        </td>
-
-                                        <td>
-                                            $1247.25
-                                        </td>
-
-                                        <td>
-                                            <span class="badge bg-soft-success text-success">Paid</span>
-                                        </td>
-
-                                        <td>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                        </td>
+                                        <td><h5 class="m-0 fw-normal">Freelance</h5></td>
+                                        <td>Oct 12, 2018</td>
+                                        <td>$1247.25</td>
+                                        <td><span class="badge bg-soft-success text-success">Paid</span></td>
+                                        <td><a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a></td>
                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <h5 class="m-0 fw-normal">Share Holding</h5>
-                                        </td>
-
-                                        <td>
-                                            Oct 10, 2018
-                                        </td>
-
-                                        <td>
-                                            $815.89
-                                        </td>
-
-                                        <td>
-                                            <span class="badge bg-soft-success text-success">Paid</span>
-                                        </td>
-
-                                        <td>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <h5 class="m-0 fw-normal">Envato's Affiliates</h5>
-                                        </td>
-
-                                        <td>
-                                            Oct 03, 2018
-                                        </td>
-
-                                        <td>
-                                            $248.75
-                                        </td>
-
-                                        <td>
-                                            <span class="badge bg-soft-danger text-danger">Overdue</span>
-                                        </td>
-
-                                        <td>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <h5 class="m-0 fw-normal">Marketing Revenue</h5>
-                                        </td>
-
-                                        <td>
-                                            Sep 21, 2018
-                                        </td>
-
-                                        <td>
-                                            $978.21
-                                        </td>
-
-                                        <td>
-                                            <span class="badge bg-soft-warning text-warning">Upcoming</span>
-                                        </td>
-
-                                        <td>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <h5 class="m-0 fw-normal">Advertise Revenue</h5>
-                                        </td>
-
-                                        <td>
-                                            Sep 15, 2018
-                                        </td>
-
-                                        <td>
-                                            $358.10
-                                        </td>
-
-                                        <td>
-                                            <span class="badge bg-soft-success text-success">Paid</span>
-                                        </td>
-
-                                        <td>
-                                            <a href="javascript: void(0);" class="btn btn-xs btn-light"><i class="mdi mdi-pencil"></i></a>
-                                        </td>
-                                    </tr>
-
                                 </tbody>
                             </table>
                         </div> <!-- end .table-responsive-->
@@ -311,7 +188,7 @@
             </div> <!-- end col -->
         </div>
         <!-- end row -->
-        
+
     </div> <!-- container -->
 
 </div> <!-- content -->
