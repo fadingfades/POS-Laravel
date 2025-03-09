@@ -148,6 +148,9 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/complete/order', 'CompleteOrder')->name('complete.order');
     Route::get('/stock', 'StockManage')->name('stock.manage');
     Route::get('/order/invoice-download/{order_id}', 'OrderInvoice');
+    Route::get('/pending/due', 'PendingDue')->name('pending.due');
+    Route::get('/order/due/{id}', 'OrderDueAjax');
+    Route::post('/update/due', 'UpdateDue')->name('update.due');
 });
 
 Route::controller(RoleController::class)->group(function () {
