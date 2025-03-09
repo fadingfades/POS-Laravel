@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use File;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -171,6 +173,37 @@ class AdminController extends Controller
 
         $notification = array(
             'message' => 'Admin User Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function DatabaseBackup(){
+        return view('admin.db_backup')->with('files',File::allFiles(storage_path('/app/Easy')));
+    }
+
+    public function BackupNow(){
+        \Artisan::call('backup:run');
+
+        $notification = array(
+            'message' => 'Database Backup Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function DownloadDatabase($getFilename){
+        $path = storage_path('app/Easy/'.$getFilename);
+        return response()->download($path);
+    }
+
+    public function DeleteDatabase($getFilename){
+        Storage::delete('Easy/'.$getFilename);
+
+        $notification = array(
+            'message' => 'Database Deleted Successfully',
             'alert-type' => 'success'
         );
 

@@ -44,6 +44,11 @@ Route::middleware('auth')->controller(AdminController::class)->group(function ()
     Route::get('/edit/admin/{id}', 'EditAdmin')->name('edit.admin');
     Route::post('/update/admin', 'UpdateAdmin')->name('admin.update');
     Route::get('/delete/admin/{id}', 'DeleteAdmin')->name('delete.admin');
+
+    Route::get('/database/backup', 'DatabaseBackup')->name('database.backup');
+    Route::get('/backup/now', 'BackupNow');
+    Route::get('/download/database/{getFilename}', 'DownloadDatabase');
+    Route::get('/delete/database/{getFilename}', 'DeleteDatabase');
 });
 
 Route::controller(EmployeeController::class)->group(function () {
