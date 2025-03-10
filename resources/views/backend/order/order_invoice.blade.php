@@ -80,8 +80,8 @@
                     Order Date: {{ $order->order_date }} <br>
                     Order Status: {{ $order->order_status }} <br>
                     Payment Status: {{ $order->payment_status }}  <br>
-                    Total Pay: {{ $order->pay }} <br>
-                    Total Due: {{ $order->due }}
+                    Total Pay: Rp {{ $order->pay }} <br>
+                    Total Due: Rp {{ $order->due }}
                 </p>
             </td>
         </tr>
@@ -110,8 +110,8 @@
                     <td align="center"> {{ $item->product->product_name }} </td>
                     <td align="center"> {{ $item->product->product_code }} </td>
                     <td align="center"> {{ $item->quantity }} </td>
-                    <td align="center">${{ $item->product->selling_price }} </td>
-                    <td align="center">$ {{ $item->total }}</td>
+                    <td align="center">Rp {{ $item->product->selling_price }} </td>
+                    <td align="center">Rp {{ $item->total }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -122,8 +122,8 @@
     <table width="100%" style="padding:0 10px 0 10px;">
         <tr>
             <td align="right">
-                <h2><span style="color: green;">Subtotal:</span> $ {{ $order->total }} </h2>
-                <h2><span style="color: green;">Total:</span> $ {{ $order->total }} </h2>
+                <h2><span style="color: green;">Subtotal:</span> Rp {{ $order->total }} </h2>
+                <h2><span style="color: green;">Total:</span> Rp {{ $order->total }} </h2>
                 {{-- <h2><span style="color: green;">Full Payment PAID</h2> --}}
             </td>
         </tr>

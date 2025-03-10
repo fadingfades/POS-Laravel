@@ -101,8 +101,8 @@
                                                         <b>{{ $item->name }}</b> <br/>
                                                     </td>
                                                     <td>{{ $item->qty }}</td>
-                                                    <td>{{ $item->price }}</td>
-                                                    <td class="text-end">${{ $item->price * $item->qty }}</td>
+                                                    <td>Rp {{ $item->price }}</td>
+                                                    <td class="text-end">Rp {{ $item->price * $item->qty }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -123,9 +123,9 @@
                             <!-- end col -->
                             <div class="col-sm-6">
                                 <div class="float-end">
-                                    <p><b>Sub-total:</b> <span class="float-end">${{ Cart::subtotal() }}</span></p>
-                                    <p><b>Vat (21%):</b> <span class="float-end"> &nbsp;&nbsp;&nbsp; ${{ Cart::tax() }}</span></p>
-                                    <h3>${{ Cart::total() }} USD</h3>
+                                    <p><b>Sub-total:</b> <span class="float-end">Rp {{ Cart::subtotal() }}</span></p>
+                                    <p><b>Vat (21%):</b> <span class="float-end"> &nbsp;&nbsp;&nbsp; Rp {{ Cart::tax() }}</span></p>
+                                    <h3>Rp {{ Cart::total() }}</h3>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

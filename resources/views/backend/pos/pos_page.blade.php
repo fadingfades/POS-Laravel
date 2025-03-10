@@ -72,11 +72,11 @@
                         <div class="bg-primary">
                             <br>
                             <p style="font-size:18px; color:#fff"> Quantity : {{ Cart::count() }} </p>
-                            <p style="font-size:18px; color:#fff"> SubTotal : {{ Cart::subtotal() }} </p>
-                            <p style="font-size:18px; color:#fff"> Vat : {{ Cart::tax() }} </p>
+                            <p style="font-size:18px; color:#fff"> SubTotal : Rp {{ Cart::subtotal() }} </p>
+                            <p style="font-size:18px; color:#fff"> Vat : Rp {{ Cart::tax() }} </p>
                             <p>
                                 <h2 class="text-white"> Total </h2>
-                                <h1 class="text-white"> {{ Cart::total() }}</h1>
+                                <h1 class="text-white">Rp {{ Cart::total() }}</h1>
                             </p>
                             <br>
                         </div>

@@ -95,14 +95,14 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">Paid Amount</label>
-                                            <p class="text-danger">{{ $order->pay }}</p>
+                                            <p class="text-danger">Rp {{ $order->pay }}</p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">Due Amount</label>
-                                            <p class="text-danger">{{ $order->due }}</p>
+                                            <p class="text-danger">Rp {{ $order->due }}</p>
                                         </div>
                                     </div>
 
@@ -143,8 +143,8 @@
                                                 <td>{{ $item->product->product_name }}</td>
                                                 <td>{{ $item->product->product_code }}</td>
                                                 <td>{{ $item->quantity }}</td>
-                                                <td>{{ $item->product->selling_price }}</td>
-                                                <td>{{ $item->total }}</td>
+                                                <td>Rp {{ $item->product->selling_price }}</td>
+                                                <td>Rp {{ $item->total }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
