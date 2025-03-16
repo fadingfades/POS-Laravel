@@ -1,209 +1,182 @@
-@extends('admin_dashboard')
-@section('admin')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+@media print {
+    /* Hilangkan header dan footer default browser */
+    @page {
+        size: auto;
+        margin: 0;
+    }
 
-<div class="content">
+    /* Pastikan judul tidak muncul */
+    title {
+        display: none;
+    }
+}
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #444;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            padding: 8px;
+            box-sizing: border-box;
+            font-size: 9px; /* Adjust font size for smaller paper */
+			margin-bottom: auto;
+        }
 
-    <!-- Start Content-->
-    <div class="container-fluid">
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 6px;
+			margin-top: 6px;
+        }
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Customer Invoice</a></li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">Customer Invoice</h4>
-                </div>
-            </div>
+        .header .company-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .header .company-info {
+            font-size: 7px;
+            font-weight: 600;
+            color: #777;
+            line-height: 1.3;
+        }
+
+        /* Invoice Information Section */
+        .invoice-info {
+            margin-bottom: 8px;
+            font-size: 8px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .invoice-info .strong {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .invoice-info div {
+            margin-bottom: 3px;
+        }
+
+        /* Item List Section */
+        .items {
+            margin-bottom: 12px;
+            font-size: 8px;
+        }
+
+        /* Flexbox for item layout */
+        .items .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .items .item:last-child {
+            border-bottom: none;
+        }
+
+        .items .item-description {
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-grow: 1;
+        }
+
+        .items .item-price,
+        .items .item-qty,
+        .items .item-total {
+            text-align: right;
+            font-size: 8px;
+            width: 35px;
+        }
+
+        /* Totals Section */
+        .totals {
+            font-size: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .totals .total-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .totals .total-line:last-child {
+            border-bottom: none;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        /* Divider Line */
+        .line {
+            margin: 8px 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Thank you note */
+        .thank-you {
+            text-align: center;
+            font-size: 7px;
+            color: #999;
+            margin-top: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="company-name">TEACHING FACTORY ALFAMART</div>
+        <div class="company-info">
+            <div>SMKN 1 PANGKEP</div>
+            <div>Jl. Sambung Jawa, Samalewa, Kec. Pangkajene, Kabupaten Pangkajene Dan Kepulauan</div>
         </div>
-        <!-- end page title -->
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <!-- Logo & title -->
-                        <div class="clearfix">
-                            <div class="float-start">
-                                <div class="auth-logo">
-                                    <div class="logo logo-dark">
-                                        <span class="logo-lg">
-                                            <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="" height="22">
-                                        </span>
-                                    </div>
-
-                                    <div class="logo logo-light">
-                                        <span class="logo-lg">
-                                            <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="" height="22">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="float-end">
-                                <h4 class="m-0 d-print-none">Invoice</h4>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mt-3">
-                                    <p><b>Hello, {{ $customer->name }}</b></p>
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            <div class="col-md-4 offset-md-2">
-                                <div class="mt-3 float-end">
-                                    <p><strong>Order Date : </strong> <span class="float-end"> &nbsp;&nbsp;&nbsp;&nbsp; Jan 17, 2016</span></p>
-                                    <p><strong>Order Status : </strong> <span class="float-end"><span class="badge bg-danger">Unpaid</span></span></p>
-                                    <p><strong>Invoice No. : </strong> <span class="float-end">000028 </span></p>
-                                </div>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="row mt-3">
-                            <div class="col-sm-6">
-                                <h6>Billing Address</h6>
-                                <address>
-                                    {{ $customer->address }} - {{ $customer->city }} <br>
-                                    <abbr title="Phone">Shop Name:</abbr> {{ $customer->shopname }}<br>
-                                    <abbr title="Phone">Phone:</abbr> {{ $customer->phone }}<br>
-                                    <abbr title="Phone">Email:</abbr> {{ $customer->email }}<br>
-                                </address>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="table-responsive">
-                                    <table class="table mt-4 table-centered">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Item</th>
-                                                <th style="width: 10%">Qty</th>
-                                                <th style="width: 10%">Unit Cost</th>
-                                                <th style="width: 10%" class="text-end">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php $sl = 1; @endphp
-                                            @foreach($contents as $key => $item)
-                                                <tr>
-                                                    <td>{{ $sl++ }}</td>
-                                                    <td>
-                                                        <b>{{ $item->name }}</b> <br/>
-                                                    </td>
-                                                    <td>{{ $item->qty }}</td>
-                                                    <td>Rp {{ $item->price }}</td>
-                                                    <td class="text-end">Rp {{ $item->price * $item->qty }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- end table-responsive -->
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="clearfix pt-5">
-                                    <h6 class="text-muted">Notes:</h6>
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            <div class="col-sm-6">
-                                <div class="float-end">
-                                    <p><b>Sub-total:</b> <span class="float-end">Rp {{ Cart::subtotal() }}</span></p>
-                                    <p><b>Vat (21%):</b> <span class="float-end"> &nbsp;&nbsp;&nbsp; Rp {{ Cart::tax() }}</span></p>
-                                    <h3>Rp {{ Cart::total() }}</h3>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                        <div class="mt-4 mb-1">
-                            <div class="text-end d-print-none">
-                                <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="mdi mdi-printer me-1"></i> Print</a>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Create Invoice</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end card -->
-            </div>
-            <!-- end col -->
-        </div>
-        <!-- end row -->
-
     </div>
-    <!-- container -->
 
-</div>
-<!-- content -->
-
-<!-- Signup modal content -->
-<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <div class="text-center mt-2 mb-4 ">
-                    <div class="auth-logo">
-                        <h3>Invoice Of {{ $customer->name }}</h3>
-                        <h3>Total Amount ${{ Cart::total() }}</h3>
-                    </div>
-                </div>
-
-                <form class="px-3" method="post" action="{{ url('/final-invoice') }}">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Payment</label>
-                        <select name="payment_status" class="form-select" id="example-select">
-                            <option selected disabled>Select Payment</option>
-                            <option value="HandCash">HandCash</option>
-                            <option value="Cheque">Cheque</option>
-                            <option value="Due">Due</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Pay Now</label>
-                        <input class="form-control" type="text" name="pay" placeholder="Pay Now">
-                    </div>
-
-                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
-                    <input type="hidden" name="order_date" value="{{ date('d-F-Y') }}">
-                    <input type="hidden" name="order_status" value="pending">
-                    <input type="hidden" name="total_products" value="{{ Cart::count() }}">
-                    <input type="hidden" name="sub_total" value="{{ Cart::subtotal() }}">
-                    <input type="hidden" name="vat" value="{{ Cart::tax() }}">
-                    <input type="hidden" name="total" value="{{ Cart::total() }}">
-
-                    <div class="mb-3 text-center">
-                        <button class="btn btn-primary" type="submit">Complete Order</button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
-        <!-- /.modal-content -->
+    <div class="invoice-info">
+        <div><span class="strong">Resi Invoice</span></div>
+        <div><span class="strong">Customer Id:</span> <strong>#LL93784</strong></div>
+        <div><span class="strong">Date:</span> <strong>01.07.2022</strong></div>
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
-@endsection
+    <div class="items">
+        <!-- Items List -->
+        @php $sl = 1; @endphp
+        @foreach($contents as $key => $item)
+        <div class="item">
+            <div class="item-description">{{ $sl++ }} {{ $item->name}}</div>
+            <div class="item-qty"><strong>{{ $item->qty }}</strong></div>
+            <div class="item-price">Rp <strong>{{ $item->price }}</strong></div>
+            <div class="item-total">Rp <strong>{{ $item->price * $item->qty }}</strong></div>
+        </div>
+        @endforeach
+    </div>
+
+    <div class="line"></div>
+
+    <div class="totals">
+        <div class="total-line">
+            <div><strong>Total Tagihan</strong></div>
+            <div><strong>Rp {{ Cart::subtotal() }}</strong></div>
+        </div>
+    </div>
+</body>
+</html>

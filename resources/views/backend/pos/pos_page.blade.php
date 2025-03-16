@@ -60,7 +60,7 @@
                                             <td>{{ $cart->price * $cart->qty }}</td>
                                             <td>
                                                 <a href="{{ url('/cart-remove/'.$cart->rowId) }}">
-                                                    <i class="fas fa-trash-alt" style="color:#ffffff"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -72,11 +72,9 @@
                         <div class="bg-primary">
                             <br>
                             <p style="font-size:18px; color:#fff"> Quantity : {{ Cart::count() }} </p>
-                            <p style="font-size:18px; color:#fff"> SubTotal : Rp {{ Cart::subtotal() }} </p>
-                            <p style="font-size:18px; color:#fff"> Vat : Rp {{ Cart::tax() }} </p>
                             <p>
                                 <h2 class="text-white"> Total </h2>
-                                <h1 class="text-white">Rp {{ Cart::total() }}</h1>
+                                <h1 class="text-white">Rp {{ Cart::subtotal() }}</h1>
                             </p>
                             <br>
                         </div>
