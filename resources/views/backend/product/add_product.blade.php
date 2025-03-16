@@ -67,6 +67,13 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
+                                            <label for="firstname" class="form-label">Product Code</label>
+                                            <input type="text" name="product_code" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
                                             <label for="firstname" class="form-label">Product Garage</label>
                                             <input type="text" name="product_garage" class="form-control">
                                         </div>
@@ -145,6 +152,7 @@
                 product_name: { required: true },
                 category_id: { required: true },
                 supplier_id: { required: true },
+                product_code: { required: true },
                 product_garage: { required: true },
                 product_store: { required: true },
                 buying_date: { required: true },
@@ -157,6 +165,7 @@
                 product_name: { required: 'Please Enter Product Name' },
                 category_id: { required: 'Please Select Category' },
                 supplier_id: { required: 'Please Select Supplier' },
+                product_code: { required: 'Please Enter Product Code' },
                 product_garage: { required: 'Please Enter Product Garage' },
                 product_store: { required: 'Please Enter Product Store' },
                 buying_date: { required: 'Please Select Buying Date' },

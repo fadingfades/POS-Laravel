@@ -9,7 +9,6 @@ use App\Models\Category;
 use App\Models\Supplier;
 use Intervention\Image\Laravel\Facades\Image;
 use Carbon\Carbon;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductImport;
@@ -28,7 +27,6 @@ class ProductController extends Controller
     }
 
     public function StoreProduct(Request $request){
-        $pcode = IdGenerator::generate(['table' => 'products','field' => 'product_code','length' => 4, 'prefix' => 'PC' ]);
         $image = $request->file('product_image');
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
         Image::read($image)->resize(300,300)->save('upload/product/'.$name_gen);
@@ -38,7 +36,7 @@ class ProductController extends Controller
             'product_name' => $request->product_name,
             'category_id' => $request->category_id,
             'supplier_id' => $request->supplier_id,
-            'product_code' => $pcode,
+            'product_code' => $request->product_code,
             'product_garage' => $request->product_garage,
             'product_store' => $request->product_store,
             'buying_date' => $request->buying_date,
