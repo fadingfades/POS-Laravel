@@ -81,7 +81,7 @@
 
                         <br>
 
-                        <form id="myForm" method="post" action="{{ url('/create-invoice') }}">
+                        <form id="myForm" method="post" action="{{ url('/create-invoice') }}" target="_blank">
                             @csrf
 
                             <div class="form-group mb-3">

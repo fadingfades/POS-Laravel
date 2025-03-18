@@ -178,5 +178,14 @@
             <div><strong>Rp {{ Cart::subtotal() }}</strong></div>
         </div>
     </div>
+
+    <script>
+        window.onload = function () {
+            window.print();
+            setTimeout(function () {
+                window.close();
+            }, 500); // Delay to ensure print dialog is processed
+        };
+    </script>
 </body>
 </html>
