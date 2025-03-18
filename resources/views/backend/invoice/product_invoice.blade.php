@@ -164,8 +164,8 @@
         <div class="item">
             <div class="item-description">{{ $sl++ }} {{ $item->name}}</div>
             <div class="item-qty"><strong>{{ $item->qty }}</strong></div>
-            <div class="item-price">Rp <strong>{{ $item->price }}</strong></div>
-            <div class="item-total">Rp <strong>{{ $item->price * $item->qty }}</strong></div>
+            <div class="item-price">Rp <strong>{{ number_format($item->price, 0, ',', '.') }}</strong></div>
+            <div class="item-total">Rp <strong>{{ number_format($item->price * $item->qty, 0, ',', '.') }}</strong></div>
         </div>
         @endforeach
     </div>

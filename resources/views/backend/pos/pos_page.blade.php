@@ -56,8 +56,8 @@
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td>{{ $cart->price }}</td>
-                                            <td>{{ $cart->price * $cart->qty }}</td>
+                                            <td>Rp {{ number_format($cart->price, 0, ',', '.') }}</td>
+                                            <td>Rp {{ number_format($cart->price * $cart->qty, 0, ',', '.') }}</td>
                                             <td>
                                                 <a href="{{ url('/cart-remove/'.$cart->rowId) }}">
                                                     <i class="fas fa-trash-alt"></i>
@@ -133,6 +133,7 @@
                                                     <img src="{{ asset($item->product_image) }}" style="width:50px; height: 40px;">
                                                 </td>
                                                 <td>{{ $item->product_name }}</td>
+                                                <td>{{ $item->product_store }} in stock</td>
                                                 <td>
                                                     <button type="submit" style="font-size: 20px; color: #000;">
                                                         <i class="fas fa-plus-square"></i>
@@ -179,6 +180,12 @@
                 $(element).removeClass('is-invalid');
             },
         });
+    });
+
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+        setTimeout(function() {
+            window.location.reload();
+        }, 500); // Adjust time if needed
     });
 </script>
 

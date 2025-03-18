@@ -16,14 +16,27 @@ class PosController extends Controller
         return view('backend.pos.pos_page', compact('product','customer'));
     }
 
-    public function AddCart(Request $request){
+    public function AddCart(Request $request) {
+        $product = Product::find($request->id);
+
+        if ($product && $request->qty > $product->product_store) {
+
+            $notification = array(
+                'message' => 'Stock habis!',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
         Cart::add([
             'id' => $request->id,
             'name' => $request->name,
             'qty' => $request->qty,
             'price' => $request->price,
             'weight' => 20,
-            'options' => ['size' => 'large']]);
+            'options' => ['size' => 'large']
+        ]);
 
         $notification = array(
             'message' => 'Product Added Successfully',
@@ -65,6 +78,15 @@ class PosController extends Controller
         $contents = Cart::content();
         $cust_id = $request->customer_id;
         $customer = Customer::where('id',$cust_id)->first();
+
+        foreach ($contents as $item) {
+            $product = Product::find($item->id);
+            if ($product) {
+                $newStock = max(0, $product->product_store - $item->qty); // Ensure stock doesn't go negative
+                $product->update(['product_store' => $newStock]);
+            }
+        }
+
         return view('backend.invoice.product_invoice',compact('contents','customer'));
     }
 }

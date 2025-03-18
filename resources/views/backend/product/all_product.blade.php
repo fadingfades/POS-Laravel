@@ -53,7 +53,7 @@
                                         <td>{{ $item['category']['category_name'] }}</td>
                                         <td>{{ $item['supllier']['name'] }}</td>
                                         <td>{{ $item->product_code }}</td>
-                                        <td>{{ $item->selling_price }}</td>
+                                        <td>Rp {{ number_format($item->selling_price, 0, ',', '.') }}</td>
                                         <td>
                                             <a href="{{ route('edit.product',$item->id) }}" class="btn btn-blue rounded-pill waves-effect waves-light"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                             <a href="{{ route('barcode.product',$item->id) }}" class="btn btn-info rounded-pill waves-effect waves-light"><i class="fa fa-barcode" aria-hidden="true"></i></a>
