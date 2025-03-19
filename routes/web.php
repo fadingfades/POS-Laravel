@@ -10,7 +10,6 @@ use App\Http\Controllers\Backend\SalaryController;
 use App\Http\Controllers\Backend\AttendenceController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\PosController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\RoleController;
@@ -119,16 +118,6 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/import/product', 'ImportProduct')->name('import.product');
     Route::get('/export', 'Export')->name('export');
     Route::post('/import', 'Import')->name('import');
-});
-
-Route::controller(ExpenseController::class)->group(function () {
-    Route::get('/add/expense', 'AddExpense')->name('add.expense');
-    Route::post('/store/expense', 'StoreExpense')->name('expense.store');
-    Route::get('/today/expense', 'TodayExpense')->name('today.expense');
-    Route::get('/edit/expense/{id}', 'EditExpense')->name('edit.expense');
-    Route::post('/update/expense', 'UpdateExpense')->name('expense.update');
-    Route::get('/month/expense', 'MonthExpense')->name('month.expense');
-    Route::get('/year/expense', 'YearExpense')->name('year.expense');
 });
 
 Route::controller(PosController::class)->group(function () {

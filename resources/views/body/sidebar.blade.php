@@ -269,32 +269,6 @@
 
                 <li class="menu-title mt-2">Custom</li>
 
-                @if(Auth::user()->can('expense.menu'))
-                <li>
-                    <a href="#expense" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-circle-outline"></i>
-                        <span> Expense </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="expense">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('add.expense') }}">Add Expense</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('today.expense') }}">Today Expense</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('month.expense') }}">Monthly Expense</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('year.expense') }}">Yearly Expense</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
                 @if(Auth::user()->can('admin.menu'))
                 <li>
                     <a href="#backup" data-bs-toggle="collapse">
