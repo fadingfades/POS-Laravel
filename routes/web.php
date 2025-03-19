@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\PosController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\SalesReportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -164,5 +165,8 @@ Route::controller(RoleController::class)->group(function () {
     Route::post('/role/permission/update/{id}', 'RolePermissionUpdate')->name('role.permission.update');
     Route::get('/admin/delete/roles/{id}', 'AdminDeleteRoles')->name('admin.delete.roles');
 });
+
+Route::get('/sales-report', [SalesReportController::class, 'SalesReport'])->name('sales.report');
+Route::get('/sales-report/pdf', [SalesReportController::class, 'ExportPDF'])->name('sales.report.pdf');
 
 require __DIR__.'/auth.php';

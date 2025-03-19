@@ -269,6 +269,21 @@
 
                 <li class="menu-title mt-2">Custom</li>
 
+                <li>
+                    <a href="#sales" data-bs-toggle="collapse">
+                        <i class="mdi mdi-account-circle-outline"></i>
+                        <span>Sales</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sales">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('sales.report') }}">Sales Report</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 @if(Auth::user()->can('admin.menu'))
                 <li>
                     <a href="#backup" data-bs-toggle="collapse">

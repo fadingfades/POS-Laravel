@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Customer;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Transaction;
+use App\Models\Sale;
 
 class PosController extends Controller
 {
@@ -74,19 +76,38 @@ class PosController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function CreateInvoice(Request $request){
+    public function CreateInvoice(Request $request) {
         $contents = Cart::content();
         $cust_id = $request->customer_id;
-        $customer = Customer::where('id',$cust_id)->first();
+        $customer = Customer::find($cust_id);
+        $totalAmount = $contents->sum(fn($item) => $item->price * $item->qty);
+
+        // Create transaction record
+        $transaction = Transaction::create([
+            'customer_id' => $cust_id,
+            'total_amount' => $totalAmount,
+            'transaction_date' => now(),
+        ]);
 
         foreach ($contents as $item) {
             $product = Product::find($item->id);
             if ($product) {
-                $newStock = max(0, $product->product_store - $item->qty); // Ensure stock doesn't go negative
+                // Deduct stock
+                $newStock = max(0, $product->product_store - $item->qty);
                 $product->update(['product_store' => $newStock]);
+
+                // Save sale record
+                Sale::create([
+                    'transaction_id' => $transaction->id,
+                    'product_id' => $item->id,
+                    'quantity' => $item->qty,
+                    'price' => $item->price,
+                    'total' => $item->price * $item->qty,
+                    'sale_date' => now(),
+                ]);
             }
         }
 
-        return view('backend.invoice.product_invoice',compact('contents','customer'));
+        return view('backend.invoice.product_invoice', compact('contents', 'customer'));
     }
 }
