@@ -1,220 +1,101 @@
-<div class="navbar-custom">
-    <div class="container-fluid">
-        <ul class="list-unstyled topnav-menu float-end mb-0">
+@php
+    $id = Auth::user()->id;
+    $adminData = App\Models\User::find($id);
+@endphp
 
-            <li class="d-none d-lg-block">
-                <form class="app-search">
-                    <div class="app-search-box dropdown">
-                        <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search..." id="top-search">
-                            <button class="btn input-group-text" type="submit">
-                                <i class="fe-search"></i>
-                            </button>
+<div class="header">
+
+    <!-- Logo -->
+    <div class="header-left active">
+        <a href="{{ route('dashboard') }}" class="logo logo-normal">
+            <img src="{{ asset('backend/assets/img/naukii.png') }}" alt="">
+        </a>
+        <a href="{{ route('dashboard') }}" class="logo logo-white">
+            <img src="{{ asset('backend/assets/img/naukii.png') }}" alt="">
+        </a>
+        <a href="{{ route('dashboard') }}" class="logo-small">
+            <img src="{{ asset('backend/assets/img/naukii.png') }}" alt="">
+        </a>
+        <a id="toggle_btn" href="javascript:void(0);">
+            <i data-feather="chevrons-left" class="feather-16"></i>
+        </a>
+    </div>
+    <!-- /Logo -->
+
+    <a id="mobile_btn" class="mobile_btn" href="#sidebar">
+        <span class="bar-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </a>
+
+    <!-- Header Menu -->
+    <ul class="nav user-menu">
+
+        <!-- Search -->
+        <li class="nav-item nav-searchinputs">
+            <div class="top-nav-search">
+                <a href="javascript:void(0);" class="responsive-search">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div>
+        </li>
+        <!-- /Search -->
+
+
+        <!-- Notifications -->
+        <li class="nav-item dropdown nav-item-box">
+            <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                <i data-feather="bell"></i>
+            </a>
+        </li>
+        <!-- /Notifications -->
+
+        <li class="nav-item nav-item-box">
+            <a href="javascript:void(0);"><i data-feather="settings"></i></a>
+        </li>
+        <li class="nav-item dropdown has-arrow main-drop">
+            <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
+                <span class="user-info">
+                    <span class="user-letter">
+                            <img src="{{ (!empty($adminData->photo)) ? url('upload/admin_image/'.$adminData->photo) : url('upload/no_image.jpg') }}" alt="Example Image" class="img-203">
+                    </span>
+                    <span class="user-detail">
+                        <span class="user-name">{{ $adminData->name }}</span>
+                        <span class="user-role">Super Admin</span>
+                    </span>
+                </span>
+            </a>
+            <div class="dropdown-menu menu-drop-user">
+                <div class="profilename">
+                    <div class="profileset">
+                        <span class="user-img"><img src="{{ (!empty($adminData->photo)) ? url('upload/admin_image/'.$adminData->photo) : url('upload/no_image.jpg') }}" alt="" class="img-204">
+                            <span class="status online"></span></span>
+                        <div class="profilesets">
+                            <h6>{{ $adminData->name }}</h6>
+                            <h5>Super Admin</h5>
                         </div>
                     </div>
-                </form>
-            </li>
-
-            <li class="dropdown d-inline-block d-lg-none">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-search noti-icon"></i>
-                </a>
-                <div class="dropdown-menu dropdown-lg dropdown-menu-end p-0">
-                    <form class="p-3">
-                        <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                    </form>
+                    <hr class="m-0">
+                    <a class="dropdown-item" href="{{ route('admin.profile') }}"> <i class="me-2"></i>Akun</a>
+                    <a class="dropdown-item" href="{{ route('change.password') }}"><i class="me-2"></i>Keamanan</a>
+                    <hr class="m-0">
+                    <a class="dropdown-item logout pb-0" href="{{ route('admin.logout') }}"><img src="{{ asset('backend/assets/img/icons/log-out.svg') }}" class="me-2" alt="img">Keluar</a>
                 </div>
-            </li>
+            </div>
+        </li>
+    </ul>
+    <!-- /Header Menu -->
 
-            <li class="dropdown d-none d-lg-inline-block">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen" href="#">
-                    <i class="fe-maximize noti-icon"></i>
-                </a>
-            </li>
-
-            <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-bell noti-icon"></i>
-                    <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-lg">
-
-                    <!-- item-->
-                    <div class="dropdown-item noti-title">
-                        <h5 class="m-0">
-                            <span class="float-end">
-                                <a href="" class="text-dark">
-                                    <small>Clear All</small>
-                                </a>
-                            </span>Notification
-                        </h5>
-                    </div>
-
-                    <div class="noti-scroll" data-simplebar>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                            <div class="notify-icon">
-                                <img src="{{ asset('backend/assets/images/users/user-1.jpg') }}" class="img-fluid rounded-circle" alt="" /> </div>
-                            <p class="notify-details">Cristina Pride</p>
-                            <p class="text-muted mb-0 user-msg">
-                                <small>Hi, How are you? What about our next meeting</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-primary">
-                                <i class="mdi mdi-comment-account-outline"></i>
-                            </div>
-                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                <small class="text-muted">1 min ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon">
-                                <img src="{{ asset('backend/assets/images/users/user-4.jpg') }}" class="img-fluid rounded-circle" alt="" /> </div>
-                            <p class="notify-details">Karen Robinson</p>
-                            <p class="text-muted mb-0 user-msg">
-                                <small>Wow ! this admin looks good and awesome design</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-warning">
-                                <i class="mdi mdi-account-plus"></i>
-                            </div>
-                            <p class="notify-details">New user registered.
-                                <small class="text-muted">5 hours ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-info">
-                                <i class="mdi mdi-comment-account-outline"></i>
-                            </div>
-                            <p class="notify-details">Caleb Flakelar commented on Admin
-                                <small class="text-muted">4 days ago</small>
-                            </p>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="notify-icon bg-secondary">
-                                <i class="mdi mdi-heart"></i>
-                            </div>
-                            <p class="notify-details">Carlos Crouch liked
-                                <b>Admin</b>
-                                <small class="text-muted">13 days ago</small>
-                            </p>
-                        </a>
-                    </div>
-
-                    <!-- All-->
-                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                        View all
-                        <i class="fe-arrow-right"></i>
-                    </a>
-
-                </div>
-            </li>
-
-            @php
-                $id = Auth::user()->id;
-                $adminData = App\Models\User::find($id);
-            @endphp
-
-            <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ (!empty($adminData->photo)) ? url('upload/admin_image/'.$adminData->photo) : url('upload/no_image.jpg') }}" alt="user-image" class="rounded-circle">
-                    <span class="pro-user-name ms-1">
-                        {{ $adminData->name }} <i class="mdi mdi-chevron-down"></i>
-                    </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
-                    <!-- item-->
-                    <div class="dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
-                    </div>
-
-                    <!-- item-->
-                    <a href="{{ route('admin.profile') }}" class="dropdown-item notify-item">
-                        <i class="fe-user"></i>
-                        <span>My Account</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="{{ route('change.password') }}" class="dropdown-item notify-item">
-                        <i class="fe-lock"></i>
-                        <span>Change Password</span>
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <!-- item-->
-                    <a href="{{ route('admin.logout') }}" class="dropdown-item notify-item">
-                        <i class="fe-log-out"></i>
-                        <span>Logout</span>
-                    </a>
-
-                </div>
-            </li>
-
-        </ul>
-
-        <!-- LOGO -->
-        <div class="logo-box">
-            <a href="index.html" class="logo logo-dark text-center">
-                <span class="logo-sm">
-                    <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
-                    <!-- <span class="logo-lg-text-light">UBold</span> -->
-                </span>
-                <span class="logo-lg">
-                    <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="" height="20">
-                    <!-- <span class="logo-lg-text-light">U</span> -->
-                </span>
-            </a>
-
-            <a href="index.html" class="logo logo-light text-center">
-                <span class="logo-sm">
-                    <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="" height="22">
-                </span>
-                <span class="logo-lg">
-                    <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="" height="20">
-                </span>
-            </a>
+    <!-- Mobile Menu -->
+    <div class="dropdown mobile-user-menu">
+        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="profile.html">My Profile</a>
+            <a class="dropdown-item" href="general-settings.html">Settings</a>
+            <a class="dropdown-item" href="{{ route('admin.logout') }}">Logout</a>
         </div>
-
-        <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
-            <li>
-                <button class="button-menu-mobile waves-effect waves-light">
-                    <i class="fe-menu"></i>
-                </button>
-            </li>
-
-            <li>
-                <!-- Mobile menu toggle (Horizontal Layout)-->
-                <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
-                    <div class="lines">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </a>
-                <!-- End mobile menu toggle-->
-            </li>   
-
-        </ul>
-        <div class="clearfix"></div>
     </div>
+    <!-- /Mobile Menu -->
 </div>

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductImport;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class ProductController extends Controller
 {
@@ -155,5 +156,13 @@ class ProductController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+
+    public function ProductDetails($id){
+        $product = Product::with(['category', 'supllier'])->findOrFail($id);
+        $generator = new BarcodeGeneratorPNG();
+        $barcode = $generator->getBarcode($product->product_code, $generator::TYPE_CODE_128);
+        $barcodeBase64 = 'data:image/png;base64,' . base64_encode($barcode);
+        return view('backend.product.product_details', compact('product', 'barcodeBase64'));
     }
 }

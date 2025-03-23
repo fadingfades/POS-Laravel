@@ -1,112 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-        <meta charset="utf-8" />
-        <title>Login | Easy POS</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <meta name="description" content="POS - Bootstrap Admin Template">
+		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+        <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+        <meta name="robots" content="noindex, nofollow">
+        <title>Nauki Pos</title>
 
-		<!-- Bootstrap css -->
-		<link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-		<!-- App css -->
-		<link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style"/>
-		<!-- icons -->
-		<link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-		<!-- Head js -->
-		<script src="{{ asset('backend/assets/js/head.js') }}"></script>
+		<!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/img/favicon-32x32.png') }}">
+
+		<!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap.min.css') }}">
+
+        <!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/fontawesome.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/all.min.css') }}">
+
+		<!-- Main CSS -->
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
 
     </head>
+    <body class="account-page">
 
-    <body class="authentication-bg authentication-bg-pattern">
+        <div id="global-loader" >
+			<div class="whirly-loader"> </div>
+		</div>
 
-        <div class="account-pages mt-5 mb-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-4">
-                        <div class="card bg-pattern">
-
-                            <div class="card-body p-4">
-                                <div class="text-center w-75 m-auto">
-                                    <div class="auth-logo">
-                                        <a href="index.html" class="logo logo-dark text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="" height="22">
-                                            </span>
-                                        </a>
-                                        <a href="index.html" class="logo logo-light text-center">
-                                            <span class="logo-lg">
-                                                <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="" height="22">
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <p class="text-muted mb-4 mt-3">Enter your login info and password to access admin panel.</p>
+		<!-- Main Wrapper -->
+        <div class="main-wrapper">
+			<div class="account-content">
+				<div class="login-wrapper">
+                    <div class="login-img">
+                        <img src="{{ asset('backend/assets/img/authentication/payment.png') }}" alt="img">
+                    </div>
+                    <div class="login-content">
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="login-userset">
+                                <div class="login-logo logo-normal">
+                                    <img src="{{ asset('backend/assets/img/naukii.png') }}" alt="img">
                                 </div>
-
-                                <form action="{{ route('login') }}" method="POST">
-                                    @csrf
-
-                                    <div class="mb-3">
-                                        <label for="login" class="form-label">Name / Email / Phone</label>
-                                        <input class="form-control" type="text" id="login" name="login" required="" placeholder="Enter your login info">
+                                <a href="index.html" class="login-logo logo-white">
+                                    <img src="{{ asset('backend/assets/img/naukii.png') }}"  alt="">
+                                </a>
+                                <div class="login-userheading">
+                                    <h3>Login</h3>
+                                    <h4>Silahkan login menggunakan username dan password</h4>
+                                </div>
+                                <div class="form-login">
+                                    <label>Username / Email / Nomor HP</label>
+                                    <div class="form-addons">
+                                        <input type="text" name="login" id="login" class="form-control">
+                                        <img src="{{ asset('backend/assets/img/icons/mail.svg') }}" alt="img">
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <div class="input-group input-group-merge">
-                                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
-                                            <div class="input-group-text" data-password="false">
-                                                <span class="password-eye"></span>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="form-login">
+                                    <label>Password</label>
+                                    <div class="pass-group">
+                                        <input type="password" name="password" id="password" class="pass-input">
+                                        <span class="fas toggle-password fa-eye-slash"></span>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="checkbox-signin" checked>
-                                            <label class="form-check-label" for="checkbox-signin">Remember me</label>
-                                        </div>
+                                </div>
+                                <div class="form-login">
+                                    <button type="submit" class="btn btn-login">Sign In</button>
+                                </div>
+                                <div class="form-sociallink">
+                                    <div class="my-4 d-flex justify-content-center align-items-center copyright-text">
+                                        <p>Copyright &copy; 2025 Nauki POS. All rights reserved</p>
                                     </div>
-
-                                    <div class="text-center d-grid">
-                                        <button class="btn btn-primary" type="submit"> Log In </button>
-                                    </div>
-
-                                </form>
-
-                            </div> <!-- end card-body -->
-                        </div>
-                        <!-- end card -->
-
-                        <div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <p class="text-white-50">Don't have an account? <a href="{{ route('register') }}" class="text-white ms-1"><b>Sign Up</b></a></p>
-                            </div> <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                    </div> <!-- end col -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
+			</div>
         </div>
-        <!-- end page -->
+		<!-- /Main Wrapper -->
 
+		<div class="customizer-links" id="setdata">
+			<ul class="sticky-sidebar">
+				<li class="sidebar-icons">
+					<a href="#" class="navigation-add" data-bs-toggle="tooltip" data-bs-placement="left"
+						data-bs-original-title="Theme">
+						<i data-feather="settings" class="feather-five"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
 
-        <footer class="footer footer-alt">
-            2015 - <script>document.write(new Date().getFullYear())</script> &copy; UBold theme by <a href="" class="text-white-50">Coderthemes</a>
-        </footer>
+		<!-- jQuery -->
+        <script src="{{ asset('backend/assets/js/jquery-3.7.1.min.js') }}"></script>
 
-        <!-- Vendor js -->
-        <script src="{{ asset('backend/assets/js/vendor.min.js') }}"></script>
+        <!-- Feather Icon JS -->
+		<script src="{{ asset('backend/assets/js/feather.min.js') }}"></script>
 
-        <!-- App js -->
-        <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
+		<!-- Bootstrap Core JS -->
+        <script src="{{ asset('backend/assets/js/bootstrap.bundle.min.js') }}"></script>
+
+		<!-- Custom JS -->
+        <script src="{{ asset('backend/assets/js/theme-script.js') }}"></script>
+		<script src="{{ asset('backend/assets/js/script.js') }}"></script>
 
     </body>
 </html>

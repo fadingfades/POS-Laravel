@@ -1,137 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="description" content="POS - Bootstrap Admin Template">
+	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+	<meta name="robots" content="noindex, nofollow">
+	<title>Nauki POS</title>
 
-        <meta charset="utf-8" />
-        <title>Dashboard | UBold - Responsive Admin Dashboard Template</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+	<style>
+    .product-img {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
 
-        <!-- Plugins css -->
-        <link href="{{ asset('backend/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('backend/assets/libs/selectize/css/selectize.bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+	.img-201 {
+		width: 40px !important;
+		height: 40px !important;
+		border-radius: 5%;
+		object-fit: cover;
+	}
 
-        <!-- Bootstrap css -->
-        <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- App css -->
-        <link href="{{ asset('backend/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style"/>
-        <!-- icons -->
-        <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Head js -->
-        <script src="{{ asset('backend/assets/js/head.js') }}"></script>
+	.img-203 {
+		width: 40px !important;
+		height: 35px !important;
+		border-radius: 2%;
+		object-fit: cover;
+	}
 
-        <link href="{{ asset('backend/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('backend/assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('backend/assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('backend/assets/libs/datatables.net-select-bs5/css/select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
+	.img-204 {
+		width: 40px !important;
+		height: 40px !important;
+		border-radius: 100%;
+		object-fit: cover;
+	}
 
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
+	.product-name {
+        font-size: 14px;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+	</style>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/img/favicon-32x32.png') }}">
 
-    </head>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap.min.css') }}">
 
-    <!-- body start -->
-    <body data-layout-mode="default" data-theme="light" data-topbar-color="light" data-menu-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='false'>
+	<!-- Datetimepicker CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-datetimepicker.min.css') }}">
 
-        <!-- Begin page -->
-        <div id="wrapper">
+	<!-- animation CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/css/animate.css') }}">
 
-            
-            <!-- Topbar Start -->
-            @include('body.header')
-            <!-- end Topbar -->
+	<!-- Select2 CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}">
 
-            <!-- ========== Left Sidebar Start ========== -->
-            @include('body.sidebar')
-            <!-- Left Sidebar End -->
+	<!-- Datatable CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/css/dataTables.bootstrap5.min.css') }}">
 
-            <!-- ============================================================== -->
-            <!-- Start Page Content here -->
-            <!-- ============================================================== -->
+	<!-- Fontawesome CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/fontawesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/all.min.css') }}">
 
-            <div class="content-page">
-                @yield('admin')
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
 
-                <!-- Footer Start -->
-                @include('body.footer')
-                <!-- end Footer -->
+</head>
 
-            </div>
+<body>
+	<!-- Main Wrapper -->
+	<div class="main-wrapper">
 
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
+		<!-- Header -->
+		@include('body.header')
+		<!-- /Header -->
 
+		<!-- Sidebar -->
+		@include('body.sidebar')
+		<!-- /Sidebar -->
 
-        </div>
-        <!-- END wrapper -->
+		<div class="page-wrapper">
+			@yield('admin')
+		</div>
 
-        <!-- Vendor js -->
-        <script src="{{ asset('backend/assets/js/vendor.min.js') }}"></script>
+	</div>
+	<!-- /Main Wrapper -->
 
-        <!-- Plugins js-->
-        <script src="{{ asset('backend/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+	<!-- jQuery -->
+	<script src="{{ asset('backend/assets/js/jquery-3.7.1.min.js') }}"></script>
 
-        <script src="{{ asset('backend/assets/libs/selectize/js/standalone/selectize.min.js') }}"></script>
+	<!-- Feather Icon JS -->
+	<script src="{{ asset('backend/assets/js/feather.min.js') }}"></script>
 
-        <!-- Dashboar 1 init js-->
-        <script src="{{ asset('backend/assets/js/pages/dashboard-1.init.js') }}"></script>
+	<!-- Slimscroll JS -->
+	<script src="{{ asset('backend/assets/js/jquery.slimscroll.min.js') }}"></script>
 
-        <!-- App js-->
-        <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
+	<!-- Datatable JS -->
+	<script src="{{ asset('backend/assets/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/dataTables.bootstrap5.min.js') }}"></script>
 
-        <script src="{{ asset('backend/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
+	<!-- Bootstrap Core JS -->
+	<script src="{{ asset('backend/assets/js/bootstrap.bundle.min.js') }}"></script>
 
-        <script src="{{ asset('backend/assets/js/pages/datatables.init.js') }}"></script>
+	<!-- Select2 JS -->
+	<script src="{{ asset('backend/assets/plugins/select2/js/select2.min.js') }}"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="{{ asset('backend/assets/js/code.js') }}"></script>
+	<!-- Datetimepicker JS -->
+	<script src="{{ asset('backend/assets/js/moment.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 
-        <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
+	<!-- Chart JS -->
+	<script src="{{ asset('backend/assets/plugins/apexchart/apexcharts.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/plugins/apexchart/chart-data.js') }}"></script>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<!-- Sweetalert 2 -->
+	<script src="{{ asset('backend/assets/plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/plugins/sweetalert/sweetalerts.min.js') }}"></script>
 
+	<!-- Custom JS -->
+	<script src="{{ asset('backend/assets/js/theme-script.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/script.js') }}"></script>
 
-<script>
-    @if(Session::has('message'))
-        var type = "{{ Session::get('alert-type','info') }}"
-        switch(type){
-            case 'info':
-            toastr.info(" {{ Session::get('message') }} ");
-            break;
+	<div class="modal fade" id="add-category">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="modal-header border-0 custom-modal-header">
+							<div class="page-title">
+								<h4>Tambah Kategori</h4>
+							</div>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body custom-modal-body">
+							<form id="addCategoryForm">
+								@csrf
+								<div class="mb-3">
+									<label class="form-label">Kategori</label>
+									<input type="text" class="form-control" id="add-category-name" name="category_name">
+								</div>
+								<div class="modal-footer-btn">
+									<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+									<button type="submit" class="btn btn-submit">Tambah Kategori</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            case 'success':
-            toastr.success(" {{ Session::get('message') }} ");
-            break;
+	<div class="modal fade" id="edit-category">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="modal-header border-0 custom-modal-header">
+							<div class="page-title">
+								<h4>Ubah Kategori</h4>
+							</div>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body custom-modal-body">
+							<form id="editCategoryForm">
+								@csrf
+								<input type="hidden" id="edit-category-id" name="id">
+								<div class="mb-3">
+									<label class="form-label">Kategori</label>
+									<input type="text" class="form-control" id="edit-category-name" name="category_name">
+								</div>
+								<div class="modal-footer-btn">
+									<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+									<button type="submit" class="btn btn-submit">Simpan Perubahan</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            case 'warning':
-            toastr.warning(" {{ Session::get('message') }} ");
-            break;
+	<div class="modal fade" id="delete-category">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="card bg-white border-0">
+							<div class="alert custom-alert1 alert-danger">
+								<div class="text-center px-5 pb-0">
+									<div class="custom-alert-icon">
+										<i class="feather-info flex-shrink-0"></i>
+									</div>
+									<h5>Apakah Anda yakin?</h5>
+									<p>Anda tidak akan bisa membatalkannya!</p>
+									<div class="">
+										<button id="confirm-delete" class="btn btn-sm btn-danger m-1">Hapus</button>
+										<button class="btn btn-sm btn-submit m-1" data-bs-dismiss="modal">Batal</button>
+									</div>
+									<input type="hidden" id="delete-category-id">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            case 'error':
-            toastr.error(" {{ Session::get('message') }} ");
-            break;
-        }
-    @endif
-</script>
-    </body>
+</body>
+
 </html>

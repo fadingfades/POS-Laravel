@@ -1,317 +1,73 @@
-<div class="left-side-menu">
-
-    <div class="h-100" data-simplebar>
-
-        <!-- User box -->
-
-        <!--- Sidemenu -->
-        <div id="sidebar-menu">
-
-            <ul id="side-menu">
-
-                <li class="menu-title">Navigation</li>
-
-                <li>
-                    <a href="{{ url('/dashboard') }}">
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> Dashboard </span>
-                    </a>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Utama</h6>
+                    <ul>
+                        <li>
+                            <a href="{{ route('dashboard') }}"><i data-feather="grid"></i><span>Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="pos.html"><i data-feather="hard-drive"></i><span>POS</span></a>
+                        </li>
+                    </ul>
                 </li>
-
-                @if(Auth::user()->can('pos.menu'))
-                <li>
-                    <a href="{{ route('pos') }}">
-                        <span class="badge bg-pink float-end">Hot</span>
-                        <i class="mdi mdi-view-dashboard-outline"></i>
-                        <span> POS </span>
-                    </a>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Inventory</h6>
+                    <ul>
+                        <li><a href="{{ route('all.product') }}"><i data-feather="box"></i><span>Produk</span></a></li>
+                        <li><a href="{{ route('add.product') }}"><i data-feather="plus-square"></i><span>Buat Produk Baru</span></a></li>
+                        <li><a href="{{ route('all.category') }}"><i data-feather="codepen"></i><span>Kategori</span></a></li>
+                        <li><a href="sales-list.html"><i data-feather="package"></i><span>Penjualan</span></a></li>
+                        <li><a href="manage-stocks.html"><i data-feather="package"></i><span>Kelola Stok</span></a></li>
+                    </ul>
                 </li>
-                @endif
-
-                <li class="menu-title mt-2">Apps</li>
-
-                @if(Auth::user()->can('employee.menu'))
-                <li>
-                    <a href="#sidebarEcommerce" data-bs-toggle="collapse">
-                        <i class="mdi mdi-cart-outline"></i>
-                        <span> Employee Manage </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarEcommerce">
-                        <ul class="nav-second-level">
-                            @if(Auth::user()->can('employee.all'))
-                            <li>
-                                <a href="{{ route('all.employee') }}">All Employee</a>
-                            </li>
-                            @endif
-                            @if(Auth::user()->can('employee.add'))
-                            <li>
-                                <a href="{{ route('add.employee') }}">Add Employee</a>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Pengguna</h6>
+                    <ul>
+                        <li><a href="customers.html"><i data-feather="user"></i><span>Pelanggan</span></a></li>
+                        <li><a href="suppliers.html"><i data-feather="users"></i><span>Suplier</span></a></li>
+                        </li>
+                    </ul>
                 </li>
-                @endif
-
-                @if(Auth::user()->can('customer.menu'))
-                <li>
-                    <a href="#sidebarCrm" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-multiple-outline"></i>
-                        <span> Customer Manage </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarCrm">
-                        <ul class="nav-second-level">
-                            @if(Auth::user()->can('customer.all'))
-                            <li>
-                                <a href="{{ route('all.customer') }}">All Customer</a>
-                            </li>
-                            @endif
-                            @if(Auth::user()->can('customer.add'))
-                            <li>
-                                <a href="{{ route('add.customer') }}">Add Customer</a>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">SDM</h6>
+                    <ul>
+                        <li><a href="employees-grid.html"><i data-feather="user"></i><span>Pegawai</span></a></li>
+                        <li><a href="attendance-admin.html"><i data-feather="user"></i><span>Kehadiran</span></a></li>
+                    </ul>
                 </li>
-                @endif
-
-                @if(Auth::user()->can('supplier.menu'))
-                <li>
-                    <a href="#sidebarEmail" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Supplier Manage </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarEmail">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('all.supplier') }}">All Supplier</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('add.supplier') }}">Add Supplier</a>
-                            </li>
-                        </ul>
-                    </div>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Pengelolah Pengguna</h6>
+                    <ul>
+                        <li><a href="users.html"><i data-feather="user-check"></i><span>Admin</span></a></li>
+                        <li class="submenu">
+                            <a href="roles-permissions.html"><i data-feather="shield"></i><span>Peran dan Akses</span><span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="roles-permissions.html">Peran</a></li>
+                                <li><a href="permision.html">Akses</a></li>
+                                <li><a href="all-roles-permision.html">Akses Peran</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
-                @endif
-
-                @if(Auth::user()->can('salary.menu'))
-                <li>
-                    <a href="#salary" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Employee Salary </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="salary">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('all.advance.salary') }}">All Advance Salary</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('add.advance.salary') }}">Add Advance Salary</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('pay.salary') }}">Pay Salary</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('month.salary') }}">Last Month Salary</a>
-                            </li>
-                        </ul>
-                    </div>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Laporan</h6>
+                    <ul>
+                        <li><a href="#"><i data-feather="pie-chart"></i><span>Laporan Penjualan</span></a></li>
+                    </ul>
                 </li>
-                @endif
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Settings</h6>
+                    <ul>
 
-                @if(Auth::user()->can('attendence.menu'))
-                <li>
-                    <a href="#attendence" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Employee Attendence </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="attendence">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('employee.attend.list') }}">Employee Attendence List </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(Auth::user()->can('category.menu'))
-                <li>
-                    <a href="#category" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Category </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="category">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('all.category') }}">All Category </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(Auth::user()->can('product.menu'))
-                <li>
-                    <a href="#product" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Products </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="product">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('all.product') }}">All Product </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('add.product') }}">Add Product </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('import.product') }}">Import Product</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(Auth::user()->can('orders.menu'))
-                <li>
-                    <a href="#orders" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Orders  </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="orders">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('pending.order') }}">Pending Orders </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('complete.order') }}">Complete Orders </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('pending.due') }}">Pending Due</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(Auth::user()->can('stock.menu'))
-                <li>
-                    <a href="#stock" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Stock Manage </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="stock">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('stock.manage') }}">Stock </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(Auth::user()->can('roles.menu'))
-                <li>
-                    <a href="#permission" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Roles And Permission    </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="permission">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('all.permission') }}">All Permission </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('all.roles') }}">All Roles</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('add.roles.permission') }}">Roles in Permission</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('all.roles.permission') }}">All Roles in Permission</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(Auth::user()->can('admin.menu'))
-                <li>
-                    <a href="#admin" data-bs-toggle="collapse">
-                        <i class="mdi mdi-email-multiple-outline"></i>
-                        <span> Setting Admin User </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="admin">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('all.admin') }}">All Admin </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('add.admin') }}">Add Admin </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                <li class="menu-title mt-2">Custom</li>
-
-                <li>
-                    <a href="#sales" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-circle-outline"></i>
-                        <span>Sales</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sales">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('sales.report') }}">Sales Report</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                @if(Auth::user()->can('admin.menu'))
-                <li>
-                    <a href="#backup" data-bs-toggle="collapse">
-                        <i class="mdi mdi-account-circle-outline"></i>
-                        <span>Database Backup</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="backup">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{ route('database.backup') }}">Database Backup </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                        </ul>
-                    </div>
+                        <li>
+                            <a href="{{ route('admin.logout') }}"><i data-feather="log-out"></i><span>Keluar</span> </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-
         </div>
-        <!-- End Sidebar -->
-
-        <div class="clearfix"></div>
-
     </div>
-    <!-- Sidebar -left -->
-
 </div>

@@ -1,93 +1,195 @@
 @extends('admin_dashboard')
 @section('admin')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <div class="content">
-
-    <!-- Start Content-->
-    <div class="container-fluid">
-
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">
-                                Add Category
-                            </button>
-                        </ol>
+    <div class="page-header">
+        <div class="add-item d-flex">
+            <div class="page-title">
+                <h4>Daftar Kategori</h4>
+                <h6>Kelola Data Kategori</h6>
+            </div>
+        </div>
+        <div class="page-btn">
+            <a href="#" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-category"><i data-feather="plus-circle" class="me-2"></i>Tambah Kategori Baru</a>
+        </div>
+    </div>
+    <!-- /product list -->
+    <div class="card table-list-card">
+        <div class="card-body">
+            <div class="table-top">
+                <div class="search-set">
+                    <div class="search-input">
+                        <a href="" class="btn btn-searchset"><i data-feather="search" class="feather-search"></i></a>
                     </div>
-                    <h4 class="page-title">All Category</h4>
                 </div>
             </div>
-        </div>
-        <!-- end page title -->
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-
-                        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
-                            <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Category Name</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($category as $key => $item)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>{{ $item->category_name }}</td>
-                                        <td>
-                                            <a href="{{ route('edit.category', $item->id) }}" class="btn btn-blue rounded-pill waves-effect waves-light">
-                                                Edit
-                                            </a>
-                                            <a href="{{ route('delete.category', $item->id) }}" class="btn btn-danger rounded-pill waves-effect waves-light" id="delete">
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div><!-- end col-->
-        </div>
-        <!-- end row-->
-
-    </div> <!-- container -->
-
-</div> <!-- content -->
-
-<!-- Signup modal content -->
-<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <form class="px-3" method="post" action="{{ route('category.store') }}">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Category Name</label>
-                        <input class="form-control" type="text" name="category_name" placeholder="Add Category">
+            <!-- /Filter -->
+            <div class="card" id="filter_inputs">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="input-blocks">
+                                <i data-feather="zap" class="info-img"></i>
+                                <select class="select">
+                                    <option>Choose Category</option>
+                                    <option>Laptop</option>
+                                    <option>Electronics</option>
+                                    <option>Shoe</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="input-blocks">
+                                <i data-feather="calendar" class="info-img"></i>
+                                <div class="input-groupicon">
+                                    <input type="text" class="datetimepicker" placeholder="Choose Date" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="input-blocks">
+                                <i data-feather="stop-circle" class="info-img"></i>
+                                <select class="select">
+                                    <option>Choose Status</option>
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 col-12 ms-auto">
+                            <div class="input-blocks">
+                                <a class="btn btn-filters ms-auto"> <i data-feather="search" class="feather-search"></i> Search </a>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="mb-3 text-center">
-                        <button class="btn btn-primary" type="submit">Save Changes</button>
-                    </div>
-
-                </form>
+                </div>
             </div>
+            <!-- /Filter -->
+            <div class="table-responsive">
+                <table class="table  datanew">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama Kategori</th>
+                            <th class="no-sort">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($category as $key => $item)
+                            <tr>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{ $item->category_name }}</td>
+                                <td class="action-table-data">
+                                    <div class="edit-delete-action">
+                                        <a class="me-2 p-2 edit-btn"
+                                            href="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#edit-category"
+                                            data-id="{{ $item->id }}"
+                                            data-name="{{ $item->category_name }}">
+                                            <i data-feather="edit" class="feather-edit"></i>
+                                        </a>
+                                        <a class="me-2 p-2 delete-btn"
+                                            href="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#delete-category"
+                                            data-id="{{ $item->id }}">
+                                            <i data-feather="trash-2" class="feather-trash-2"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /product list -->
+</div>
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<script>
+    $(document).ready(function() {
+    // Open Edit Modal & Populate Fields
+    $('.edit-btn').on('click', function() {
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+        $('#edit-category-id').val(id);
+        $('#edit-category-name').val(name);
+    });
+
+    // Handle Edit Form Submission
+    $('#editCategoryForm').on('submit', function(e) {
+        e.preventDefault();
+        let id = $('#edit-category-id').val();
+        let name = $('#edit-category-name').val();
+
+        $.ajax({
+            url: "{{ route('category.update') }}",
+            method: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: id,
+                category_name: name
+            },
+            success: function(response) {
+                alert(response.message);
+                location.reload(); // Refresh table after update
+            },
+            error: function(response) {
+                alert("Gagal memperbarui kategori.");
+            }
+        });
+    });
+
+    // Open Delete Modal
+    $('.delete-btn').on('click', function() {
+        let id = $(this).data('id');
+        $('#delete-category-id').val(id);
+    });
+
+    // Handle Delete Confirmation
+    $('#confirm-delete').on('click', function() {
+        let id = $('#delete-category-id').val();
+
+        $.ajax({
+            url: `/delete/category/${id}`,
+            method: "GET",
+            success: function(response) {
+                alert(response.message);
+                location.reload(); // Refresh table after delete
+            },
+            error: function(response) {
+                alert("Gagal menghapus kategori.");
+            }
+        });
+    });
+
+    // Handle Add Category Form Submission
+    $('#addCategoryForm').on('submit', function(e) {
+        e.preventDefault();
+        let categoryName = $('#add-category-name').val();
+
+        $.ajax({
+            url: "{{ route('category.store') }}",
+            method: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                category_name: categoryName
+            },
+            success: function(response) {
+                alert(response.message);
+                $('#add-category').modal('hide'); // Close the modal
+                location.reload(); // Refresh the table
+            },
+            error: function(xhr) {
+                alert("Gagal menambahkan kategori. Pastikan input tidak kosong.");
+            }
+        });
+    });
+});
+</script>
 
 @endsection
