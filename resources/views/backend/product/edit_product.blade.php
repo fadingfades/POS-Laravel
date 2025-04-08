@@ -51,7 +51,7 @@
         <ul class="table-top-head">
             <li>
                 <div class="page-btn">
-                    <a href="product-list.html" class="btn btn-secondary"><i data-feather="arrow-left" class="me-2"></i>Kembali Ke Daftar Produk</a>
+                    <a href="{{ route('all.product') }}" class="btn btn-secondary"><i data-feather="arrow-left" class="me-2"></i>Kembali Ke Daftar Produk</a>
                 </div>
             </li>
             <li>

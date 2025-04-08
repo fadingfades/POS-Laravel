@@ -2,76 +2,62 @@
 @section('admin')
 
 <div class="content">
-
-    <!-- Start Content-->
-    <div class="container-fluid">
-
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <a href="{{ route('import.product') }}" class="btn btn-info rounded-pill waves-effect waves-light">Import</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{{ route('export') }}" class="btn btn-danger rounded-pill waves-effect waves-light">Export</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{{ route('add.product') }}" class="btn btn-primary rounded-pill waves-effect waves-light">Add Product</a>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">All Product</h4>
-                </div>
+    <div class="page-header">
+        <div class="add-item d-flex">
+            <div class="page-title">
+                <h4>Daftar Stok</h4>
+                <h6>Kelola Data Stok</h6>
             </div>
         </div>
-        <!-- end page title -->
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-
-                        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
-                            <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Supplier</th>
-                                    <th>Code</th>
-                                    <th>Stock</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @foreach($product as $key => $item)
-                                <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>
-                                        <img src="{{ asset($item->product_image) }}" style="width:50px; height: 40px;">
-                                    </td>
-                                    <td>{{ $item->product_name }}</td>
-                                    <td>{{ $item['category']['category_name'] }}</td>
-                                    <td>{{ $item['supllier']['name'] }}</td>
-                                    <td>{{ $item->product_code }}</td>
-                                    <td>
-                                        <button class="btn btn-warning waves-effect waves-light">
-                                            {{ $item->product_store }}
-                                        </button>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div> <!-- end card body-->
-                </div> <!-- end card -->
-            </div><!-- end col-->
+        <div class="page-btn">
+            <a href="#" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-units"><i data-feather="plus-circle" class="me-2"></i>Tambah Stok</a>
         </div>
-        <!-- end row-->
-
-    </div> <!-- container -->
-
-</div> <!-- content -->
+    </div>
+    <!-- /product list -->
+    <div class="card table-list-card">
+        <div class="card-body">
+            <div class="table-top">
+                <div class="search-set">
+                    <div class="search-input">
+                        <a href="" class="btn btn-searchset"><i data-feather="search" class="feather-search"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Filter -->
+            <div class="table-responsive">
+                <table class="table  datanew">
+                    <thead>
+                        <tr>
+                            <th class="no-sort">#</th>
+                            <th>Nama Produk</th>
+                            <th>Suplier</th>
+                            <th>Kode</th>
+                            <th>Jumlah Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($product as $key => $item)
+                            <tr>
+                                <td>{{ $key+1 }}</td>
+                                <td>
+                                    <div class="productimgname">
+                                        <div class="product-img">
+                                            <img src="{{ asset($item->product_image) }}" alt="Example Image" class="img-201">
+                                            <a href="javascript:void(0);">{{ $item->product_name }}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ $item['supllier']['name'] }}</td>
+                                <td>{{ $item->product_code }}</td>
+                                <td>{{ $item->product_store }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /product list -->
+</div>
 
 @endsection

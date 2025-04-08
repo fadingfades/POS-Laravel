@@ -63,7 +63,7 @@
                     </span>
                     <span class="user-detail">
                         <span class="user-name">{{ $adminData->name }}</span>
-                        <span class="user-role">Super Admin</span>
+                        <span class="user-role">{{ auth()->user()->getRoleNames()->first() ?? 'Tidak ada peran' }}</span>
                     </span>
                 </span>
             </a>
@@ -74,7 +74,7 @@
                             <span class="status online"></span></span>
                         <div class="profilesets">
                             <h6>{{ $adminData->name }}</h6>
-                            <h5>Super Admin</h5>
+                            <h5>{{ auth()->user()->getRoleNames()->first() ?? 'Tidak ada peran' }}</h5>
                         </div>
                     </div>
                     <hr class="m-0">

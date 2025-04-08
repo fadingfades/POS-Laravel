@@ -63,7 +63,7 @@
                                         <a class="me-2 p-2" href="{{ route('edit.product', $item->id) }}" >
                                             <i data-feather="edit" class="feather-edit"></i>
                                         </a>
-                                        <a class="me-2 p-2 delete-btn" data-id="{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete-units">
+                                        <a class="me-2 p-2 delete-btn" data-id="{{ $item->id }}" data-bs-toggle="modal" data-bs-target="#delete-products">
                                             <i data-feather="trash-2" class="feather-trash-2"></i>
                                         </a>
                                     </div>
@@ -81,7 +81,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let deleteButtons = document.querySelectorAll(".delete-btn");
-        let confirmDelete = document.getElementById("confirm-delete");
+        let confirmDelete = document.getElementById("confirm-delete-product");
 
         deleteButtons.forEach(button => {
             button.addEventListener("click", function () {
