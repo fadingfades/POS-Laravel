@@ -22,14 +22,13 @@ class SupplierController extends Controller
     public function StoreSupplier(Request $request){
         $validateData = $request->validate([
             'name' => 'required|max:200',
-            'email' => 'required|unique:customers|max:200',
+            'email' => 'required|unique:suppliers|max:200',
             'phone' => 'required|max:200',
             'address' => 'required|max:400',
             'shopname' => 'required|max:200',
             'account_holder' => 'required|max:200',
-            'account_number' => 'required',
             'type' => 'required',
-            'image' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $image = $request->file('image');
@@ -37,7 +36,7 @@ class SupplierController extends Controller
         Image::read($image)->resize(300,300)->save('upload/supplier/'.$name_gen);
         $save_url = 'upload/supplier/'.$name_gen;
 
-        Supplier::insert([
+        $supplier = Supplier::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -53,94 +52,58 @@ class SupplierController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        $notification = array(
-            'message' => 'Supplier Inserted Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('all.supplier')->with($notification);
+        return response()->json(['success' => 'Supplier added successfully']);
     }
 
     public function EditSupplier($id){
         $supplier = Supplier::findOrFail($id);
-        return view('backend.supplier.edit_supplier', compact('supplier'));
+        return response()->json($supplier);
     }
 
     public function UpdateSupplier(Request $request){
-
         $supplier_id = $request->id;
+        $supplier = Supplier::findOrFail($supplier_id);
 
-        if ($request->file('image')) {
-        $image = $request->file('image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::read($image)->resize(300,300)->save('upload/supplier/'.$name_gen);
-        $save_url = 'upload/supplier/'.$name_gen;
-
-        Supplier::findOrFail($supplier_id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'shopname' => $request->shopname,
-            'type' => $request->type,
-            'account_holder' => $request->account_holder,
-            'account_number' => $request->account_number,
-            'bank_name' => $request->bank_name,
-            'bank_branch' => $request->bank_branch,
-            'city' => $request->city,
-            'image' => $save_url,
-            'created_at' => Carbon::now(),
-        ]);
-
-        $notification = array(
-            'message' => 'Supplier Updated Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('all.supplier')->with($notification);
-        } else{
-            Supplier::findOrFail($supplier_id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'shopname' => $request->shopname,
-            'type' => $request->type,
-            'account_holder' => $request->account_holder,
-            'account_number' => $request->account_number,
-            'bank_name' => $request->bank_name,
-            'bank_branch' => $request->bank_branch,
-            'city' => $request->city,
-            'created_at' => Carbon::now(),
-        ]);
-
-        $notification = array(
-            'message' => 'Supplier Updated Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('all.supplier')->with($notification);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            Image::read($image)->resize(300,300)->save('upload/supplier/'.$name_gen);
+            $save_url = 'upload/supplier/'.$name_gen;
+            if (file_exists($supplier->image)) {
+                unlink($supplier->image);
+            }
+            $supplier->image = $save_url;
         }
 
+        $supplier->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'shopname' => $request->shopname,
+            'type' => $request->type,
+            'account_holder' => $request->account_holder,
+            'account_number' => $request->account_number,
+            'bank_name' => $request->bank_name,
+            'bank_branch' => $request->bank_branch,
+            'city' => $request->city,
+        ]);
 
+        return response()->json(['success' => 'Supplier updated successfully']);
     }
 
     public function DeleteSupplier($id){
-        $supplier_img = Supplier::findOrFail($id);
-        $img = $supplier_img->image;
-        unlink($img);
-        Supplier::findOrFail($id)->delete();
+        $supplier = Supplier::findOrFail($id);
+        if (file_exists($supplier->image)) {
+            unlink($supplier->image);
+        }
+        $supplier->delete();
 
-        $notification = array(
-            'message' => 'Supplier Deleted Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
+        return response()->json(['success' => 'Supplier deleted successfully']);
     }
 
     public function DetailsSupplier($id){
         $supplier = Supplier::findOrFail($id);
-        return view('backend.supplier.details_supplier', compact('supplier'));
+        return response()->json($supplier);
     }
 }

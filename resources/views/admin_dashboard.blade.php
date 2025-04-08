@@ -487,55 +487,55 @@
 									<div class="col-lg-4 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Nama</label>
-											<input type="text" name="name" class="form-control" value="Thomas">
+											<input type="text" name="name" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-4 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Email</label>
-											<input type="email" name="email" class="form-control" value="thomas@gmail.com">
+											<input type="email" name="email" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-4 pe-0">
 										<div class="input-blocks">
 											<label class="mb-2">Nomor Telfon</label>
-											<input class="form-control" name="phone" type="text" value="798738291732">
+											<input class="form-control" name="phone" type="text">
 										</div>
 									</div>
 									<div class="col-lg-12 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Alamat</label>
-											<input type="text" name="address" class="form-control" value="Jl.Sambung Jawa">
+											<input type="text" name="address" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-4 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Asal Toko</label>
-											<input type="text" name="shopname" class="form-control" value="TEFA">
+											<input type="text" name="shopname" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-4 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Akun Holder</label>
-											<input type="text" name="account_holder" class="form-control" value="TEFA">
+											<input type="text" name="account_holder" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-4 pe-0">
 										<div class="input-blocks">
 											<label class="mb-2">Nama Bank</label>
-											<input class="form-control" name="bank_name" type="text" value="BRI">
+											<input class="form-control" name="bank_name" type="text">
 										</div>
 									</div>
 									<div class="col-lg-6 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Cabang Bank</label>
-											<input type="text" name="bank_branch" class="form-control" value="Pangkep">
+											<input type="text" name="bank_branch" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-6 pe-0">
 										<div class="mb-3">
 											<label class="form-label">Asal Kota</label>
-											<input type="text" name="city" class="form-control" value="Pangkep">
+											<input type="text" name="city" class="form-control">
 										</div>
 									</div>
 								</div>
@@ -579,6 +579,375 @@
 		</div>
 	</div>
 	<!-- /Delete Data -->
+
+	<!-- Add Supplier -->
+	<div class="modal fade" id="add-supplier">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="modal-header border-0 custom-modal-header">
+							<div class="page-title">
+								<h4>Tambah Suplier</h4>
+							</div>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body custom-modal-body">
+							<form id="addSupplierForm" method="POST" enctype="multipart/form-data">
+								@csrf
+								<div class="modal-title-head people-cust-avatar">
+									<h6>Foto</h6>
+								</div>
+								<div class="new-employee-field">
+									<div class="profile-pic-upload">
+										<div class="profile-pic people-profile-pic">
+											<img id="showImage-supplier" src="{{ url('upload/no_image.jpg') }}" alt="Example Image" class="img-202">
+										</div>
+										<div class="mb-3">
+											<div class="image-upload mb-0">
+												<input id="image-supplier" name="image" type="file">
+												<div class="image-uploads">
+													<h4>Ganti Foto</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Nama</label>
+											<input type="text" name="name" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Email</label>
+											<input type="email" name="email" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="input-blocks">
+											<label class="mb-2">Nomor Telfon</label>
+											<input class="form-control" name="phone" type="text">
+										</div>
+									</div>
+									<div class="col-lg-12 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Alamat</label>
+											<input type="text" name="address" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Asal Toko</label>
+											<input type="text" name="shopname" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Tipe Suplier</label>
+											<select name="type" class="select">
+												<option value="Distributor">Distributor</option>
+												<option value="Stakeholder">Stakeholder</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Akun Holder</label>
+											<input type="text" name="account_holder" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="input-blocks">
+											<label class="mb-2">Nama Bank</label>
+											<input class="form-control" name="bank_name" type="text">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-2">
+											<label class="form-label">Cabang Bank</label>
+											<input type="text" name="bank_branch" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Asal Kota</label>
+											<input type="text" name="city" class="form-control">
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer-btn">
+									<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+									<button type="submit" class="btn btn-submit">Simpan</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Add Supplier -->
+
+	<!-- Edit Supplier -->
+	<div class="modal fade" id="edit-supplier">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="modal-header border-0 custom-modal-header">
+							<div class="page-title">
+								<h4>Ubah Suplier</h4>
+							</div>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body custom-modal-body">
+							<form id="editSupplierForm" method="POST" enctype="multipart/form-data">
+								@csrf
+								<input type="hidden" name="id" id="edit_supplier_id">
+								<div class="modal-title-head people-cust-avatar">
+									<h6>Foto</h6>
+								</div>
+								<div class="new-employee-field">
+									<div class="profile-pic-upload">
+										<div class="profile-pic people-profile-pic">
+											<img id="showImage-supplier" src="" alt="Example Image" class="img-202">
+										</div>
+										<div class="mb-3">
+											<div class="image-upload mb-0">
+												<input id="image-supplier" name="image" type="file">
+												<div class="image-uploads">
+													<h4>Ganti Foto</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Nama</label>
+											<input type="text" name="name" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Email</label>
+											<input type="email" name="email" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="input-blocks">
+											<label class="mb-2">Nomor Telfon</label>
+											<input class="form-control" name="phone" type="text">
+										</div>
+									</div>
+									<div class="col-lg-12 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Alamat</label>
+											<input type="text" name="address" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Asal Toko</label>
+											<input type="text" name="shopname" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Tipe Suplier</label>
+											<select name="type" class="select">
+												<option value="Distributor">Distributor</option>
+                                                <option value="Stakeholder">Stakeholder</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Akun Holder</label>
+											<input type="text" name="account_holder" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="input-blocks">
+											<label class="mb-2">Nama Bank</label>
+											<input class="form-control" name="bank_name" type="text">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-2">
+											<label class="form-label">Cabang Bank</label>
+											<input type="text" name="bank_branch" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Asal Kota</label>
+											<input type="text" name="city" class="form-control">
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer-btn">
+									<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+									<button type="submit" class="btn btn-submit">Simpan</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Edit Supplier -->
+
+	<!-- Detail Supplier -->
+	<div class="modal fade" id="detail-supplier">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="modal-header border-0 custom-modal-header">
+							<div class="page-title">
+								<h4>Informasi Suplier</h4>
+							</div>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body custom-modal-body">
+							<form action="customers.html">
+								<div class="modal-title-head people-cust-avatar">
+									<h6>Foto</h6>
+								</div>
+								<div class="new-employee-field">
+									<div class="profile-pic-upload">
+										<div class="profile-pic people-profile-pic">
+											<img src="" alt="Example Image" class="img-202">
+										</div>
+										<div class="mb-3">
+											<div class="image-upload mb-0">
+												<input type="file">
+												<div class="image-uploads">
+													<h4>Ganti Foto</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Nama</label>
+											<input type="text" name="name" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Email</label>
+											<input type="email" name="email" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="input-blocks">
+											<label class="mb-2">Nomor Telfon</label>
+											<input class="form-control" name="phone" type="text">
+										</div>
+									</div>
+									<div class="col-lg-12 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Alamat</label>
+											<input type="text" name="address" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Asal Toko</label>
+											<input type="text" name="shopname" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Tipe Suplier</label>
+											<select name="type" class="select">
+												<option>Distributor</option>
+												<option>Stakeholder</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Akun Holder</label>
+											<input type="text" name="account_holder" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="input-blocks">
+											<label class="mb-2">Nama Bank</label>
+											<input class="form-control" name="bank_name" type="text">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-2">
+											<label class="form-label">Cabang Bank</label>
+											<input type="text" name="bank_branch" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-4 pe-0">
+										<div class="mb-3">
+											<label class="form-label">Asal Kota</label>
+											<input type="text" name="city" class="form-control">
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer-btn">
+									<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Kembali</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Detail Supplier -->
+
+	<!-- Delete Supplier -->
+	<div class="modal fade" id="delete-supplier">
+		<div class="modal-dialog modal-dialog-centered custom-modal-two">
+			<div class="modal-content">
+				<div class="page-wrapper-new p-0">
+					<div class="content">
+						<div class="card bg-white border-0">
+							<div class="alert custom-alert1 alert-danger">
+								<div class="text-center  px-5 pb-0">
+									<div class="custom-alert-icon">
+										<i class="feather-info flex-shrink-0"></i>
+									</div>
+									<h5>Apakah Anda yakin?</h5>
+									<p class="">Anda tidak akan bisa membatalkannya!</p>
+									<div class="">
+										<button class="btn btn-sm btn-danger m-1">Hapus</button>
+										<button class="btn btn-sm btn-submit m-1" data-bs-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Delete Supplier -->
 
 </body>
 
