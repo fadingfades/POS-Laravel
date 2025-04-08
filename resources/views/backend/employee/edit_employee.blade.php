@@ -1,153 +1,146 @@
 @extends('admin_dashboard')
 @section('admin')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<style>
+    .product-img {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .img-201 {
+        width: 130px !important;
+        height: 120px !important;
+        border-radius: 5%;
+        object-fit:cover;
+        margin-bottom: 5px;
+    }
+
+    .img-203 {
+        width: 40px !important;
+        height: 35px !important;
+        border-radius: 2%;
+        object-fit: cover;
+    }
+
+    .img-204 {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+
+    .product-name {
+        font-size: 14px;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+</style>
 
 <div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Edit Employee</a></li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">Edit Employee</h4>
-                </div>
+    <div class="page-header">
+        <div class="add-item d-flex">
+            <div class="page-title">
+                <h4>Ubah Data</h4>
+                <h6>Ubah data Pegawai</h6>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-8 col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="tab-pane" id="settings">
-                            <form method="post" action="{{ route('employee.update') }}" enctype="multipart/form-data">
-                                @csrf
-                                <h5 class="mb-4 text-uppercase">
-                                    <i class="mdi mdi-account-circle me-1"></i> Edit Employee
-                                </h5>
-
-                                <input type="hidden" name="id" value="{{ $employee->id }}">
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Name</label>
-                                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $employee->name }}">
-                                            @error('name')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+        <ul class="table-top-head">
+            <li>
+                <div class="page-btn">
+                    <a href="employees-grid.html" class="btn btn-secondary"><i data-feather="arrow-left" class="me-2"></i>Kembali Ke Daftar Pegawai</a>
+                </div>
+            </li>
+            <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header"><i data-feather="chevron-up" class="feather-chevron-up"></i></a>
+            </li>
+        </ul>
+    </div>
+    <!-- /product list -->
+    <form method="POST" action="{{ route('employee.update') }}" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="id" value="{{ $employee->id }}">
+        <div class="card">
+            <div class="card-body">
+                <div class="new-employee-field">
+                    <div class="card-title-head">
+                        <h6><span><i data-feather="info" class="feather-edit"></i></span>Informasi Pegawai</h6>
+                    </div>
+                    <div class="profile-pic-upload">
+                        <div class="profile-pic">
+                            <div class="phone-img">
+                                <div class="productimgname">
+                                    <div class="product-img">
+                                        <img id="showImage" src="{{ asset($employee->image) }}" alt="Example Image" class="img-201">
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Email</label>
-                                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ $employee->email }}">
-                                            @error('email')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Phone</label>
-                                            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ $employee->phone }}">
-                                            @error('phone')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Address</label>
-                                            <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ $employee->address }}">
-                                            @error('address')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Experience</label>
-                                            <select name="experience" class="form-select @error('experience') is-invalid @enderror">
-                                                <option selected disabled>Select Year</option>
-                                                <option value="1 Year" {{ $employee->experience == '1 Year' ? 'selected' : '' }}>1 Year</option>
-                                                <option value="2 Year" {{ $employee->experience == '2 Year' ? 'selected' : '' }}>2 Year</option>
-                                                <option value="3 Year" {{ $employee->experience == '3 Year' ? 'selected' : '' }}>3 Year</option>
-                                                <option value="4 Year" {{ $employee->experience == '4 Year' ? 'selected' : '' }}>4 Year</option>
-                                                <option value="5 Year" {{ $employee->experience == '5 Year' ? 'selected' : '' }}>5 Year</option>
-                                            </select>
-                                            @error('experience')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Salary</label>
-                                            <input type="text" name="salary" class="form-control @error('salary') is-invalid @enderror" value="{{ $employee->salary }}">
-                                            @error('salary')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Vacation</label>
-                                            <input type="text" name="vacation" class="form-control @error('vacation') is-invalid @enderror" value="{{ $employee->vacation }}">
-                                            @error('vacation')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee City</label>
-                                            <input type="text" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ $employee->city }}">
-                                            @error('city')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label class="form-label">Employee Image</label>
-                                            <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
-                                            @error('image')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label class="form-label"></label>
-                                            <img id="showImage" src="{{ asset($employee->image) }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="input-blocks mb-0">
+                            <div class="image-upload mb-0">
+                                <input type="file" name="image" id="image">
+                                <div class="image-uploads">
+                                    <h4>Ganti Foto</h4>
                                 </div>
-
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-success waves-effect waves-light mt-2">
-                                        <i class="mdi mdi-content-save"></i> Save
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" name="name" class="form-control" value="{{ $employee->name }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" value="{{ $employee->email }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nomor Telepon</label>
+                                <input type="text" name="phone" class="form-control" value="{{ $employee->phone }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Alamat</label>
+                                <input type="text" name="address" class="form-control" value="{{ $employee->address }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Pengalaman</label>
+                                <input type="text" name="experience" class="form-control" value="{{ $employee->experience }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Asal Kota</label>
+                                <input type="text" name="city" class="form-control" value="{{ $employee->city }}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- /product list -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Simpan Data </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script type="text/javascript">

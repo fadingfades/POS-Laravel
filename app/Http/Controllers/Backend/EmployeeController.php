@@ -26,7 +26,6 @@ class EmployeeController extends Controller
             'phone' => 'required|max:200',
             'address' => 'required|max:400',
             'salary' => 'required|max:200',
-            'vacation' => 'required|max:200',
             'experience' => 'required',
             'image' => 'required',
         ],
@@ -36,7 +35,7 @@ class EmployeeController extends Controller
 
         $image = $request->file('image');
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::read($image)->resize(300,300)->save('upload/employee/'.$name_gen);
+        Image::read($image)->resize(130,120)->save('upload/employee/'.$name_gen);
         $save_url = 'upload/employee/'.$name_gen;
 
         Employee::insert([
@@ -72,7 +71,7 @@ class EmployeeController extends Controller
         if ($request->file('image')) {
         $image = $request->file('image');
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::read($image)->resize(300,300)->save('upload/employee/'.$name_gen);
+        Image::read($image)->resize(130,120)->save('upload/employee/'.$name_gen);
         $save_url = 'upload/employee/'.$name_gen;
 
         Employee::findOrFail($employee_id)->update([

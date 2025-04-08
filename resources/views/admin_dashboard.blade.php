@@ -949,6 +949,32 @@
 	</div>
 	<!-- /Delete Supplier -->
 
+	<div class="modal fade" id="delete-employee">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="card bg-white border-0">
+								<div class="alert custom-alert1 alert-danger">
+									<div class="text-center  px-5 pb-0">
+										<div class="custom-alert-icon">
+											<i class="feather-info flex-shrink-0"></i>
+										</div>
+										<h5>Apakah Anda yakin?</h5>
+										<p class="">Anda tidak akan bisa membatalkannya!</p>
+										<div class="">
+											<a id="confirm-delete-employee" class="btn btn-sm btn-danger m-1" href="#">Hapus</a>
+											<button class="btn btn-sm btn-submit m-1" data-bs-dismiss="modal">Batal</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 </body>
 
 </html>
