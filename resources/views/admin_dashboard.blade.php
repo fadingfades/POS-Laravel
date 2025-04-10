@@ -975,6 +975,97 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="add-roles">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="modal-header border-0 custom-modal-header">
+								<div class="page-title">
+									<h4>Tambah Peran</h4>
+								</div>
+								<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body custom-modal-body">
+								<form id="addRolesForm">
+									<div class="mb-0">
+										<label class="form-label">Nama Peran</label>
+										<input type="text" name="name" id="add-roles-name" class="form-control">
+									</div>
+									<div class="modal-footer-btn">
+										<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+										<button type="submit" class="btn btn-submit">Buat Data</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="edit-roles">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="modal-header border-0 custom-modal-header">
+								<div class="page-title">
+									<h4>Ubah Data</h4>
+								</div>
+								<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body custom-modal-body">
+								<form id="editRolesForm">
+									@csrf
+									<input type="hidden" id="edit-roles-id" name="id">
+									<div class="mb-0">
+										<label class="form-label">Nama Peran</label>
+										<input type="text" name="name" id="edit-roles-name" class="form-control">
+									</div>
+									<div class="modal-footer-btn">
+										<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Cancel</button>
+										<button type="submit" class="btn btn-submit">Save Changes</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="delete-roles">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="card bg-white border-0">
+								<div class="alert custom-alert1 alert-danger">
+									<div class="text-center  px-5 pb-0">
+										<div class="custom-alert-icon">
+											<i class="feather-info flex-shrink-0"></i>
+										</div>
+										<h5>Apakah Anda yakin?</h5>
+										<p class="">Anda tidak akan bisa membatalkannya!</p>
+										<div class="">
+											<button id="confirm-delete-roles" class="btn btn-sm btn-danger m-1">Hapus</button>
+											<button class="btn btn-sm btn-submit m-1" data-bs-dismiss="modal">Batal</button>
+										</div>
+										<input type="hidden" id="delete-roles-id">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 </body>
 
 </html>

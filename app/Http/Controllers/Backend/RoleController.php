@@ -89,7 +89,9 @@ class RoleController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.roles')->with($notification);
+        return response()->json([
+            'message' => 'Peran berhasil ditambahkan!'
+        ]);
     }
 
     public function EditRoles($id){
@@ -109,7 +111,9 @@ class RoleController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.roles')->with($notification);
+        return response()->json([
+            'message' => 'Peran berhasil diperbarui!'
+        ]);
     }
 
 
@@ -121,7 +125,9 @@ class RoleController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->back()->with($notification);
+        return response()->json([
+            'message' => 'Peran berhasil dihapus!'
+        ]);
     }
 
     public function AddRolesPermission(){
