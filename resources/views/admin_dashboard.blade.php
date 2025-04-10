@@ -1066,6 +1066,133 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="add-permission">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="modal-header border-0 custom-modal-header">
+								<div class="page-title">
+									<h4>Tambah Akses</h4>
+								</div>
+								<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body custom-modal-body">
+								<form id="addPermissionForm">
+									@csrf
+									<div class="col-lg-12">
+										<div class="input-blocks">
+											<label>Nama Akses</label>
+											<input type="text" name="name" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="input-blocks">
+											<label>Nama Group</label>
+											<select name="group_name" class="select">
+												<option value="POS">POS</option>
+                                                <option value="Pegawai">Pegawai</option>
+                                                <option value="Pelanggan">Pelanggan</option>
+                                                <option value="Suplier">Suplier</option>
+                                                <option value="Kehadiran">Kehadiran</option>
+                                                <option value="Kategori">Kategori</option>
+                                                <option value="Produk">Produk</option>
+                                                <option value="Stok">Stok</option>
+                                                <option value="Peran">Peran</option>
+											</select>
+										</div>
+									</div>
+									<div class="modal-footer-btn">
+										<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+										<button type="submit" class="btn btn-submit">Buat Data</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="edit-permission">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="modal-header border-0 custom-modal-header">
+								<div class="page-title">
+									<h4>Ubah Data</h4>
+								</div>
+								<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body custom-modal-body">
+								<form id="editPermissionForm">
+									@csrf
+									<input type="hidden" name="id" id="edit_permission_id">
+									<div class="col-lg-12">
+										<div class="input-blocks">
+											<label>Nama Akses</label>
+											<input type="text" name="name" class="form-control">
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="input-blocks">
+											<label>Nama Group</label>
+											<select name="group_name" class="select">
+												<option value="POS">POS</option>
+                                                <option value="Pegawai">Pegawai</option>
+                                                <option value="Pelanggan">Pelanggan</option>
+                                                <option value="Suplier">Suplier</option>
+                                                <option value="Kehadiran">Kehadiran</option>
+                                                <option value="Kategori">Kategori</option>
+                                                <option value="Produk">Produk</option>
+                                                <option value="Stok">Stok</option>
+                                                <option value="Peran">Peran</option>
+											</select>
+										</div>
+									</div>
+									<div class="modal-footer-btn">
+										<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+										<button type="submit" class="btn btn-submit">Buat Data</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="delete-permission">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="card bg-white border-0">
+								<div class="alert custom-alert1 alert-danger">
+									<div class="text-center  px-5 pb-0">
+										<div class="custom-alert-icon">
+											<i class="feather-info flex-shrink-0"></i>
+										</div>
+										<h5>Apakah Anda yakin?</h5>
+										<p class="">Anda tidak akan bisa membatalkannya!</p>
+										<div class="">
+											<button class="btn btn-sm btn-danger m-1">Hapus</button>
+											<button class="btn btn-sm btn-submit m-1" data-bs-dismiss="modal">Batal</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 </body>
 
 </html>

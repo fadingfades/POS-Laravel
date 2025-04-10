@@ -31,12 +31,12 @@ class RoleController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.permission')->with($notification);
+        return response()->json(['success' => 'Akses berhasil ditambahkan']);
     }
 
     public function EditPermission($id){
         $permission = Permission::findOrFail($id);
-        return view('backend.pages.permission.edit_permission',compact('permission'));
+        return response()->json($permission);
     }
 
 
