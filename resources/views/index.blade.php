@@ -1,6 +1,11 @@
 @php
     $id = Auth::user()->id;
     $adminData = App\Models\User::find($id);
+    $totalSupplier = \App\Models\Supplier::count();
+    $totalProduct = \App\Models\Product::count();
+    $totalCustomer = \App\Models\Customer::count();
+    $productData = \App\Models\Product::latest()->get();
+    $totalSales = \App\Models\Transaction::sum('total_amount');
 @endphp
 
 @extends('admin_dashboard')
@@ -16,7 +21,7 @@
         <div class="col-xl-3 col-sm-6 col-12 d-flex">
             <div class="dash-count das3">
                 <div class="dash-counts">
-                    <h4>Rp 5.000.000</h4>
+                    <h4>Rp {{ number_format($totalSales, 0, ',', '.') }}</h4>
                     <h5>Total Penjualan</h5>
                 </div>
                 <div class="dash-imgs">
@@ -27,7 +32,7 @@
         <div class="col-xl-3 col-sm-6 col-12 d-flex">
             <div class="dash-count">
                 <div class="dash-counts">
-                    <h4>2.000</h4>
+                    <h4>{{ $totalProduct }}</h4>
                     <h5>Total Barang</h5>
                 </div>
                 <div class="dash-imgs">
@@ -38,7 +43,7 @@
         <div class="col-xl-3 col-sm-6 col-12 d-flex">
             <div class="dash-count das1">
                 <div class="">
-                    <h4>100</h4>
+                    <h4>{{ $totalCustomer }}</h4>
                     <h5>Pelanggan</h5>
                 </div>
                 <div class="dash-imgs">
@@ -49,7 +54,7 @@
         <div class="col-xl-3 col-sm-6 col-12 d-flex">
             <div class="dash-count das2">
                 <div class="dash-counts">
-                    <h4>200</h4>
+                    <h4>{{ $totalSupplier }}</h4>
                     <h5>Suplier</h5>
                 </div>
                 <div class="dash-imgs">
@@ -82,81 +87,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($productData as $key => $product)
                         <tr>
-                            <td>1</td>
+                            <td>{{ $key+1 }}</td>
                             <td>
                                 <div class="productimgname">
                                 <div class="product-img">
-                                    <img src="{{ asset('backend/assets/img/coming-soon.png') }}" alt="Example Image" class="img-201">
-                                    <a href="javascript:void(0);">Iphone 14 Pro</a>
+                                    <img src="{{ asset($product->product_image) }}" alt="Example Image" class="img-201">
+                                    <a href="javascript:void(0);">{{ $product->product_name }}</a>
                                 </div>
                                 </div>
                             </td>
-                            <td><a href="javascript:void(0);">PT006</a></td>
-                            <td>Rp 50.000</td>
-                            <td>29 Jan 2025</td>
-                            <td>29 Jan 2027</td>
+                            <td><a href="javascript:void(0);">{{ $product->product_code }}</a></td>
+                            <td>Rp {{ number_format($product->selling_price, 0, ',', '.') }}</td>
+                            <td>{{ $product->buying_date }}</td>
+                            <td>{{ $product->expire_date }}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <div class="productimgname">
-                                <div class="product-img">
-                                    <img src="{{ asset('backend/assets/img/products/expire-product-02.png') }}" alt="Example Image" class="img-201">
-                                    <a href="javascript:void(0);">Iphone 14 Pro</a>
-                                </div>
-                                </div>
-                            </td>
-                            <td><a href="javascript:void(0);">PT006</a></td>
-                            <td>Rp 50.000</td>
-                            <td>29 Jan 2025</td>
-                            <td>29 Jan 2027</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>
-                                <div class="productimgname">
-                                <div class="product-img">
-                                    <img src="{{ asset('backend/assets/img/products/expire-product-01.png') }}" alt="Example Image" class="img-201">
-                                    <a href="javascript:void(0);">Black Slim 200</a>
-                                </div>
-                                </div>
-                            </td>
-                            <td><a href="javascript:void(0);">PT006</a></td>
-                            <td>Rp 50.000</td>
-                            <td>29 Jan 2025</td>
-                            <td>29 Jan 2027</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>
-                                <div class="productimgname">
-                                <div class="product-img">
-                                    <img src="{{ asset('backend/assets/img/products/expire-product-04.png') }}" alt="Example Image" class="img-201">
-                                    <a href="javascript:void(0);">Woodcraft Sandalo</a>
-                                </div>
-                                </div>
-                            </td>
-                            <td><a href="javascript:void(0);">PT006</a></td>
-                            <td>Rp 50.000</td>
-                            <td>29 Jan 2025</td>
-                            <td>29 Jan 2027</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>
-                                <div class="productimgname">
-                                <div class="product-img">
-                                    <img src="{{ asset('backend/assets/img/products/expire-product-03.png') }}" alt="Example Image" class="img-201">
-                                    <a href="javascript:void(0);">Apple Series 5 Watch</a>
-                                </div>
-                                </div>
-                            </td>
-                            <td><a href="javascript:void(0);">PT006</a></td>
-                            <td>Rp 50.000</td>
-                            <td>29 Jan 2025</td>
-                            <td>29 Jan 2027</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
