@@ -127,14 +127,29 @@ class AdminController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.admin')->with($notification);
+        return response()->json(['success' => true]);
     }
 
     public function EditAdmin($id){
         $roles = Role::all();
-        $adminuser = User::findOrFail($id);
-        return view('backend.admin.edit_admin',compact('roles','adminuser'));
+        $adminuser = User::with('roles')->findOrFail($id);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'roles' => $roles,
+                'adminuser' => [
+                    'id' => $adminuser->id,
+                    'name' => $adminuser->name,
+                    'email' => $adminuser->email,
+                    'phone' => $adminuser->phone,
+                    'roles' => $adminuser->roles->pluck('name') // array of assigned role names
+                ]
+            ]);
+        }
+
+        return view('backend.admin.edit_admin', compact('roles','adminuser'));
     }
+
 
 
     public function UpdateAdmin(Request $request){
@@ -160,7 +175,7 @@ class AdminController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.admin')->with($notification);
+        return response()->json(['success' => true]);
     }
 
 
@@ -208,5 +223,10 @@ class AdminController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+
+    public function GetAllRoles() {
+        $roles = Role::select('id', 'name')->get();
+        return response()->json($roles);
     }
 }

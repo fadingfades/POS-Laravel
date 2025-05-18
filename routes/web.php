@@ -49,6 +49,7 @@ Route::middleware('auth')->controller(AdminController::class)->group(function ()
     Route::get('/backup/now', 'BackupNow');
     Route::get('/download/database/{getFilename}', 'DownloadDatabase');
     Route::get('/delete/database/{getFilename}', 'DeleteDatabase');
+    Route::get('/admin/get-roles', [AdminController::class, 'GetAllRoles'])->name('admin.get.roles');
 });
 
 Route::controller(EmployeeController::class)->group(function () {

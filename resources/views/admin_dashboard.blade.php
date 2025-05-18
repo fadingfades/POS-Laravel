@@ -1193,6 +1193,161 @@
 			</div>
 		</div>
 
+				<!-- Add User -->
+		<div class="modal fade" id="add-admin">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="modal-header border-0 custom-modal-header">
+								<div class="page-title">
+									<h4>Tambah Admin Baru</h4>
+								</div>
+								<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body custom-modal-body">
+								<form id="addAdminForm" method="POST" enctype="multipart/form-data">
+									@csrf
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="input-blocks">
+												<label>Nama</label>
+												<input type="text" name="name" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="input-blocks">
+												<label>Email</label>
+												<input type="email" name="email" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="input-blocks">
+												<label>Nomor Telepon</label>
+												<input type="text" name="phone" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="input-blocks">
+												<label>Password</label>
+												<div class="pass-group">
+													<input type="password" name="password" class="pass-input">
+													<span class="fas toggle-password fa-eye-slash"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="input-blocks">
+												<label>Bertugas Sebagai</label>
+												<select name="roles" class="select">
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer-btn">
+										<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+										<button type="submit" class="btn btn-submit">Simpan</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Add User -->
+
+		<!-- Edit User -->
+		<div class="modal fade" id="edit-admin">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="modal-header border-0 custom-modal-header">
+								<div class="page-title">
+									<h4>Ubah Info Admin</h4>
+								</div>
+								<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body custom-modal-body">
+								<form id="editAdminForm" method="POST" enctype="multipart/form-data">
+									@csrf
+									<input type="hidden" name="id">
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="input-blocks">
+												<label>Nama</label>
+												<input type="text" name="name" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="input-blocks">
+												<label>Email</label>
+												<input type="email" name="email" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="input-blocks">
+												<label>Nomor Telepon</label>
+												<input type="text" name="phone" class="form-control">
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<div class="input-blocks">
+												<label>Bertugas Sebagai</label>
+												<select name="roles" class="select">
+													<option>Kasir</option>
+													<option>Manager</option>
+													<option>Admin</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer-btn">
+										<button type="button" class="btn btn-cancel me-2" data-bs-dismiss="modal">Batal</button>
+										<button type="submit" class="btn btn-submit">Simpan</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit User -->
+
+        <!-- Delete Data -->
+		<div class="modal fade" id="delete-admin">
+			<div class="modal-dialog modal-dialog-centered custom-modal-two">
+				<div class="modal-content">
+					<div class="page-wrapper-new p-0">
+						<div class="content">
+							<div class="card bg-white border-0">
+								<div class="alert custom-alert1 alert-danger">
+									<div class="text-center  px-5 pb-0">
+										<div class="custom-alert-icon">
+											<i class="feather-info flex-shrink-0"></i>
+										</div>
+										<h5>Apakah Anda yakin?</h5>
+										<p class="">Anda tidak akan bisa membatalkannya!</p>
+										<div class="">
+											<button id="confirmDeleteBtn" class="btn btn-sm btn-danger m-1">Hapus</button>
+											<button class="btn btn-sm btn-submit m-1" data-bs-dismiss="modal">Batal</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete Data -->
+
 </body>
 
 </html>
