@@ -137,16 +137,14 @@ class RoleController extends Controller
         return view('backend.pages.roles.add_roles_permission',compact('roles','permissions','permission_groups'));
     }
 
-    public function StoreRolesPermission(Request $request){
-        $data = array();
+    public function StoreRolesPermission(Request $request) {
         $permissions = $request->permission;
 
-        foreach($permissions as $key => $item){
-            $data['role_id'] = $request->role_id;
-            $data['permission_id'] = $item;
+        $role = Role::findOrFail($request->role_id);
 
-            DB::table('role_has_permissions')->insert($data);
-        }
+        $permissionNames = Permission::whereIn('id', $permissions)->pluck('name')->toArray();
+
+        $role->syncPermissions($permissionNames);
 
         $notification = array(
             'message' => 'Role Permission Added Successfully',

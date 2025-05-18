@@ -3,6 +3,71 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<style>
+    .product-img {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .img-201 {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 5%;
+        object-fit: cover;
+    }
+
+    .cust-name {
+        font-size: 14px;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .cust-img {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .img-202 {
+        width: 140px !important;
+        height: 120px !important;
+        border-radius: 20%;
+        object-fit:contain;
+    }
+
+    .img-203 {
+        width: 40px !important;
+        height: 35px !important;
+        border-radius: 2%;
+        object-fit: cover;
+    }
+
+    .img-204 {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+
+    .product-name {
+        font-size: 14px;
+        color: #000;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .img-202 {
+        width: 130px !important;
+        height: 110px !important;
+        object-fit: cover;
+        border-radius: 5%;
+    }
+</style>
+
 <div class="content">
     <div class="page-header">
         <div class="add-item d-flex">
