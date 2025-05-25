@@ -16,7 +16,15 @@ use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SalesReportController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
+});
+
+Route::get('/register', function () {
+    return redirect('/login');
+});
+
+Route::post('/register', function () {
+    abort(403, 'Registration is disabled.');
 });
 
 Route::get('/dashboard', function () {
