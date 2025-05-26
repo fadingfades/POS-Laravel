@@ -13,9 +13,11 @@ use App\Models\Sale;
 class PosController extends Controller
 {
     public function Pos(){
-        $product = Product::latest()->get();
+        $product = Product::with('category')->latest()->get();
         $customer = Customer::latest()->get();
-        return view('backend.pos.pos_page', compact('product','customer'));
+        $categories = $product->pluck('category')->unique('id');
+        $cartItems = Cart::content();
+        return view('backend.pos.pos_page', compact('product','customer', 'categories', 'cartItems'));
     }
 
     public function AddCart(Request $request) {
@@ -37,7 +39,7 @@ class PosController extends Controller
             'qty' => $request->qty,
             'price' => $request->price,
             'weight' => 20,
-            'options' => ['size' => 'large']
+            'options' => ['image' => $product->product_image, 'product_code' => $product->product_code]
         ]);
 
         $notification = array(
@@ -74,6 +76,11 @@ class PosController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+
+    public function CartClear() {
+        Cart::destroy();
+        return redirect()->back()->with('message', 'Keranjang berhasil dikosongkan.');
     }
 
     public function CreateInvoice(Request $request) {

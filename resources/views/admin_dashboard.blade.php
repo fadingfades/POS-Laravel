@@ -69,6 +69,10 @@
 	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/fontawesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/fontawesome/css/all.min.css') }}">
 
+	<!-- Owl Carousel CSS -->
+	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/owlcarousel/owl.carousel.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('backend/assets/plugins/owlcarousel/owl.theme.default.min.css') }}">
+
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
 
@@ -83,10 +87,12 @@
 		<!-- /Header -->
 
 		<!-- Sidebar -->
-		@include('body.sidebar')
+		@if (!Route::is('pos'))
+    		@include('body.sidebar')
+		@endif
 		<!-- /Sidebar -->
 
-		<div class="page-wrapper">
+		<div class="page-wrapper {{ Route::is('pos') ? 'pos-pg-wrapper ms-0' : '' }}">
 			@yield('admin')
 		</div>
 
@@ -123,6 +129,9 @@
 	<!-- Sweetalert 2 -->
 	<script src="{{ asset('backend/assets/plugins/sweetalert/sweetalert2.all.min.js') }}"></script>
 	<script src="{{ asset('backend/assets/plugins/sweetalert/sweetalerts.min.js') }}"></script>
+
+	<!-- Owl JS -->
+	<script src="{{ asset('backend/assets/plugins/owlcarousel/owl.carousel.min.js') }}"></script>
 
 	<!-- Custom JS -->
 	<script src="{{ asset('backend/assets/js/theme-script.js') }}"></script>

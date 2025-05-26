@@ -28,7 +28,7 @@ class SupplierController extends Controller
             'shopname' => 'required|max:200',
             'account_holder' => 'required|max:200',
             'type' => 'required',
-            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'required|image|max:2048',
         ]);
 
         $image = $request->file('image');
