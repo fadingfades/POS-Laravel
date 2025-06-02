@@ -15,7 +15,17 @@
 		width: 80px !important;
 		height: 80px !important;
 		border-radius: 5%;
-		object-fit:contain;
+		object-fit: contain;
+		flex-shrink: 0; /* Prevents shrinking in flex containers */
+		display: block;
+	}
+
+	.product-img {
+		width: 80px;
+		height: 80px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.img-203 {
@@ -50,7 +60,12 @@
 		font-size: 14px;
 		color: #000;
 		text-decoration: none;
-		white-space: nowrap; /* Mencegah teks turun ke bawah */
+		white-space: normal;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 </style>
 
@@ -144,7 +159,7 @@
 									<h6>Informasi Pelanggan</h6>
 									<div class="input-block d-flex align-items-center">
 										<div class="flex-grow-1">
-											<select class="select">
+											<select class="select" id="customer-select">
 												@foreach($customer as $cus)
 													<option value="{{ $cus->id }}">{{ $cus->name }}</option>
 												@endforeach
@@ -219,7 +234,7 @@
 									</div>
 								</div>
 								<div class="d-grid btn-block">
-									<a class="btn btn-success" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#payment-completed">
+									<a class="btn btn-success" href="javascript:void(0);" data-bs-toggle="modal" id="open-receipt" data-bs-target="#payment-completed">
 										Pembayaran Selesai
 									</a>
 								</div>
@@ -306,7 +321,118 @@ $(document).ready(function() {
 			}
 		});
 	}
+
+	$('#open-receipt').click(function () {
+		let customerName = $('#select2-customer-select-container').text().trim();
+
+		if (!customerName) {
+			customerName = '—';
+		}
+
+		$('#receipt-customer-name').text(customerName);
+	});
 });
 </script>
+
+<div class="modal fade modal-default" id="payment-completed" aria-labelledby="payment-completed">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body text-center">
+				<form action="pos.html">
+					<div class="icon-head">
+						<a href="javascript:void(0);">
+							<i data-feather="check-circle" class="feather-40"></i>
+						</a>
+					</div>
+					<h4>Pembayaran Selesai</h4>
+					<div class="modal-footer d-sm-flex justify-content-between">
+						<button type="button" class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#print-receipt">Cetak Resi<i class="feather-arrow-right-circle icon-me-5"></i></button>
+						<a href="{{ route('cart.clear') }}" class="btn btn-secondary flex-fill">Pembelian Selanjutnya<i class="feather-arrow-right-circle icon-me-5"></i></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade modal-default" id="print-receipt" aria-labelledby="print-receipt">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="d-flex justify-content-end">
+				<button type="button" class="close p-0" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="text-center">
+					<h6>TEACHING FACTORY ALFAMART</h6>
+					<p class="mb-0">SMK NEGERI 1 PANGKEP</p>
+					<p class="mb-0">Jl. Sambungjawa, Pangkep</p>
+				</div>
+
+				<div class="tax-invoice">
+					<h6 class="text-center">Resi Pembelian</h6>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="invoice-user-name"><span>Name: </span><span id="receipt-customer-name">-</span></div>
+						</div>
+						<div class="col-md-6">
+							<div class="invoice-user-name"><span>Date: </span><span>{{ \Carbon\Carbon::now()->format('d.m.Y') }}</span></div>
+						</div>
+					</div>
+				</div>
+
+				<table class="table-borderless w-100 table-fit">
+					<thead>
+						<tr>
+							<th># Item</th>
+							<th>Harga</th>
+							<th>Jumlah</th>
+							<th class="text-end">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						@php $total = 0; $i = 1; @endphp
+						@foreach ($cartItems as $item)
+							@php
+								$lineTotal = $item->price * $item->qty;
+								$total += $lineTotal;
+							@endphp
+							<tr>
+								<td title="{{ $item->name }}">{{ $i++ }}. {{ \Illuminate\Support\Str::limit($item->name, 16, '...') }}</td>
+								<td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+								<td>{{ $item->qty }}</td>
+								<td class="text-end">Rp {{ number_format($lineTotal, 0, ',', '.') }}</td>
+							</tr>
+						@endforeach
+						<tr>
+							<td colspan="4">
+								<table class="table-borderless w-100 table-fit">
+									<tr>
+										<td>Sub Total :</td>
+										<td class="text-end">Rp {{ number_format($total, 0, ',', '.') }}</td>
+									</tr>
+									<tr>
+										<td>Total Bill :</td>
+										<td class="text-end">Rp {{ number_format($total, 0, ',', '.') }}</td>
+									</tr>
+									<tr>
+										<td>Total Payable :</td>
+										<td class="text-end">Rp {{ number_format($total, 0, ',', '.') }}</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="text-center invoice-bar">
+					<p>Terima kasih telah berbelanja bersama kami. Silakan datang kembali.</p>
+					<a href="javascript:void(0);" class="btn btn-primary">Cetak Resi</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 @endsection
