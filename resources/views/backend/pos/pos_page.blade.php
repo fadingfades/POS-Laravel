@@ -234,9 +234,7 @@
 									</div>
 								</div>
 								<div class="d-grid btn-block">
-									<a class="btn btn-success" href="javascript:void(0);" data-bs-toggle="modal" id="open-receipt" data-bs-target="#payment-completed">
-										Pembayaran Selesai
-									</a>
+									<a class="btn btn-success {{ Cart::count() == 0 ? 'disabled' : '' }}" href="javascript:void(0);" data-bs-toggle="modal" id="open-receipt" data-bs-target="#payment-completed" {{ Cart::count() == 0 ? 'aria-disabled=true tabindex=-1' : '' }} >Pembayaran Selesai</a>
 								</div>
 
 							</aside>
@@ -255,11 +253,24 @@ $(document).ready(function() {
 			_token: '{{ csrf_token() }}'
 		};
 
-		$.post("{{ url('/add-cart') }}", data, function () {
-			location.reload();
-		}).fail(function () {
-			alert('Stok habis atau gagal menambahkan!');
-		});
+		$.post("{{ url('/add-cart') }}", data)
+			.done(function (response) {
+				Swal.fire({
+					icon: 'success',
+					title: 'Berhasil',
+					text: response.message,
+					timer: 1200,
+					showConfirmButton: false
+				}).then(() => location.reload());
+			})
+			.fail(function (xhr) {
+				let response = xhr.responseJSON;
+				Swal.fire({
+					icon: 'error',
+					title: 'Gagal',
+					text: response?.message || 'Gagal menambahkan produk!'
+				});
+			});
 	});
 
 	$(document).on('click', '.confirm-text', function (e) {
@@ -331,6 +342,52 @@ $(document).ready(function() {
 
 		$('#receipt-customer-name').text(customerName);
 	});
+
+	$('#submit-invoice-btn').on('click', function () {
+		let selectedCustomerId = $('#customer-select').val();
+
+		if (!selectedCustomerId) {
+			alert('Pilih pelanggan terlebih dahulu.');
+			return;
+		}
+
+		$('#invoice-customer-id').val(selectedCustomerId);
+
+		$('#create-invoice-form').submit();
+		setTimeout(function () {
+			window.location.href = "{{ route('cart.clear') }}";
+		}, 2000);
+	});
+
+	$('#submit-invoice-and-continue').on('click', function () {
+		let selectedCustomerId = $('#customer-select').val();
+
+		if (!selectedCustomerId) {
+			alert('Pilih pelanggan terlebih dahulu.');
+			return;
+		}
+
+		$('#invoice-customer-id').val(selectedCustomerId);
+
+		$.ajax({
+			url: "{{ url('/create-invoice') }}",
+			method: "POST",
+			data: $('#create-invoice-form').serialize(),
+			headers: {
+				'X-CSRF-TOKEN': '{{ csrf_token() }}'
+			},
+			success: function () {
+				window.location.href = "{{ route('cart.clear') }}";
+			},
+			error: function () {
+				Swal.fire({
+					icon: 'error',
+					title: 'Gagal',
+					text: 'Gagal menyelesaikan transaksi.'
+				});
+			}
+		});
+	});
 });
 </script>
 
@@ -347,7 +404,7 @@ $(document).ready(function() {
 					<h4>Pembayaran Selesai</h4>
 					<div class="modal-footer d-sm-flex justify-content-between">
 						<button type="button" class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#print-receipt">Cetak Resi<i class="feather-arrow-right-circle icon-me-5"></i></button>
-						<a href="{{ route('cart.clear') }}" class="btn btn-secondary flex-fill">Pembelian Selanjutnya<i class="feather-arrow-right-circle icon-me-5"></i></a>
+						<button type="button" id="submit-invoice-and-continue" class="btn btn-secondary flex-fill">Pembelian Selanjutnya<i class="feather-arrow-right-circle icon-me-5"></i></button>
 					</div>
 				</form>
 			</div>
@@ -428,11 +485,16 @@ $(document).ready(function() {
 
 				<div class="text-center invoice-bar">
 					<p>Terima kasih telah berbelanja bersama kami. Silakan datang kembali.</p>
-					<a href="javascript:void(0);" class="btn btn-primary">Cetak Resi</a>
+					<button type="button" id="submit-invoice-btn" class="btn btn-primary">Cetak Resi</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<form id="create-invoice-form" method="POST" action="{{ url('/create-invoice') }}" target="_blank" style="display: none;">
+    @csrf
+    <input type="hidden" name="customer_id" id="invoice-customer-id">
+</form>
 
 @endsection

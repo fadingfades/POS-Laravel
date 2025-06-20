@@ -24,13 +24,10 @@ class PosController extends Controller
         $product = Product::find($request->id);
 
         if ($product && $request->qty > $product->product_store) {
-
-            $notification = array(
-                'message' => 'Stock habis!',
-                'alert-type' => 'error'
-            );
-
-            return redirect()->back()->with($notification);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Stok habis!'
+            ], 400);
         }
 
         Cart::add([
@@ -42,12 +39,10 @@ class PosController extends Controller
             'options' => ['image' => $product->product_image, 'product_code' => $product->product_code]
         ]);
 
-        $notification = array(
-            'message' => 'Product Added Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Produk berhasil ditambahkan.'
+        ]);
     }
 
     public function AllItem(){
