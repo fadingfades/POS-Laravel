@@ -139,6 +139,7 @@ Route::controller(PosController::class)->group(function () {
     Route::get('/cart-remove/{rowId}', 'CartRemove');
     Route::post('/create-invoice', 'CreateInvoice');
     Route::get('/cart-clear', 'CartClear')->name('cart.clear');
+    Route::get('/find-product-by-code', 'FindProductByCode');
 });
 
 Route::controller(OrderController::class)->group(function () {

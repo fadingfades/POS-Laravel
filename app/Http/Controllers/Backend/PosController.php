@@ -112,4 +112,17 @@ class PosController extends Controller
 
         return view('backend.invoice.product_invoice', compact('contents', 'customer'));
     }
+
+    public function FindProductByCode(Request $request)
+    {
+        $code = $request->get('code');
+
+        $product = Product::where('product_code', $code)->first();
+
+        if (!$product) {
+            return response()->json(['message' => 'Produk tidak ditemukan'], 404);
+        }
+
+        return response()->json($product);
+    }
 }

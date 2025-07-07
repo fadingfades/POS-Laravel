@@ -388,6 +388,81 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	const barcodeInput = document.getElementById('barcode-input');
+
+	function focusBarcodeInput() {
+		if (document.activeElement !== barcodeInput) {
+			barcodeInput.focus({ preventScroll: true });
+		}
+	}
+
+	focusBarcodeInput();
+
+	document.addEventListener('keydown', (e) => {
+		const tag = document.activeElement.tagName;
+		if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+			focusBarcodeInput();
+		}
+	});
+
+	barcodeInput.addEventListener('keypress', function (e) {
+		if (e.key === 'Enter') {
+			const code = barcodeInput.value.trim();
+			if (code !== '') {
+				addProductToCartByBarcode(code);
+				barcodeInput.value = '';
+			}
+		}
+	});
+
+	function addProductToCartByBarcode(code) {
+		$.ajax({
+			url: '{{ url("/find-product-by-code") }}',
+			method: 'GET',
+			data: { code: code },
+			success: function (product) {
+				const data = {
+					id: product.id,
+					name: product.product_name,
+					price: product.selling_price,
+					qty: 1,
+					_token: '{{ csrf_token() }}'
+				};
+
+				$.post("{{ url('/add-cart') }}", data)
+					.done(function (response) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Produk Ditambahkan',
+							text: response.message,
+							timer: 1000,
+							showConfirmButton: false
+						}).then(() => location.reload());
+					})
+					.fail(() => {
+						Swal.fire({
+							icon: 'error',
+							title: 'Gagal Menambahkan Produk'
+						});
+					});
+			},
+			error: function () {
+				Swal.fire({
+					icon: 'error',
+					title: 'Produk Tidak Ditemukan',
+					text: `Kode: ${code}`
+				});
+			}
+		});
+	}
+
+	setInterval(() => {
+		const active = document.activeElement;
+		if (!active || (active.tagName !== 'INPUT' && active.tagName !== 'TEXTAREA' && active.tagName !== 'SELECT')) {
+			document.getElementById('barcode-input').focus();
+		}
+	}, 2000);
 });
 </script>
 
@@ -491,6 +566,8 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+<input type="text" id="barcode-input" autocomplete="off" style="position: fixed; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; z-index: 100;">
 
 <form id="create-invoice-form" method="POST" action="{{ url('/create-invoice') }}" target="_blank" style="display: none;">
     @csrf
