@@ -112,15 +112,19 @@
     <table>
         <tr>
             <td><strong>Sub Total</strong></td>
-            <td class="text-right">Rp{{ number_format($total, 0, ',', '.') }}</td>
+            <td class="text-right">Rp{{ number_format($totalAmount, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td><strong>Total Bill</strong></td>
-            <td class="text-right">Rp{{ number_format($total, 0, ',', '.') }}</td>
+            <td class="text-right">Rp{{ number_format($totalAmount, 0, ',', '.') }}</td>
+        </tr>
+        <tr>
+            <td><strong>Cash Paid</strong></td>
+            <td class="text-right">Rp{{ number_format($cashPaid ?? 0, 0, ',', '.') }}</td>
         </tr>
         <tr class="total-row">
-            <td><strong>Total Payable</strong></td>
-            <td class="text-right"><strong>Rp{{ number_format($total, 0, ',', '.') }}</strong></td>
+            <td><strong>Change</strong></td>
+            <td class="text-right"><strong>Rp{{ number_format($changeAmount ?? 0, 0, ',', '.') }}</strong></td>
         </tr>
     </table>
     <script>

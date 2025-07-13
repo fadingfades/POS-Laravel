@@ -84,7 +84,9 @@ class PosController extends Controller
         $customer = Customer::find($cust_id);
         $totalAmount = $contents->sum(fn($item) => $item->price * $item->qty);
 
-        // Create transaction record
+        $cashPaid = (int) $request->cash_paid;
+        $changeAmount = (int) $request->change_amount;
+
         $transaction = Transaction::create([
             'customer_id' => $cust_id,
             'total_amount' => $totalAmount,
@@ -94,11 +96,9 @@ class PosController extends Controller
         foreach ($contents as $item) {
             $product = Product::find($item->id);
             if ($product) {
-                // Deduct stock
                 $newStock = max(0, $product->product_store - $item->qty);
                 $product->update(['product_store' => $newStock]);
 
-                // Save sale record
                 Sale::create([
                     'transaction_id' => $transaction->id,
                     'product_id' => $item->id,
@@ -110,7 +110,7 @@ class PosController extends Controller
             }
         }
 
-        return view('backend.invoice.product_invoice', compact('contents', 'customer'));
+        return view('backend.invoice.product_invoice', compact('contents', 'customer', 'totalAmount', 'cashPaid', 'changeAmount'));
     }
 
     public function FindProductByCode(Request $request)

@@ -226,9 +226,18 @@
 												<td class="text-end">{{ Cart::count() }}</td>
 											</tr>
 											<tr>
-											<tr>
 												<td>Total</td>
 												<td class="text-end">Rp{{ number_format(Cart::subtotal(), 0, ',', '.') }}</td>
+											</tr>
+											<tr>
+												<td>Uang Tunai</td>
+												<td class="text-end">
+													<input type="text" id="customer-cash" class="form-control form-control-sm text-end" placeholder="Rp 0">
+												</td>
+											</tr>
+											<tr>
+												<td>Kembalian</td>
+												<td class="text-end"><strong id="change-amount">Rp 0</strong></td>
 											</tr>
 										</table>
 									</div>
@@ -244,6 +253,58 @@
 
 <script>
 $(document).ready(function() {
+	function formatToRupiah(angka) {
+		let number_string = angka.replace(/[^,\d]/g, '').toString();
+		let split = number_string.split(',');
+		let sisa = split[0].length % 3;
+		let rupiah = split[0].substr(0, sisa);
+		let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		if (ribuan) {
+			let separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		return 'Rp ' + rupiah;
+	}
+
+	function cleanRupiah(rpString) {
+		return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
+	}
+
+	$('#customer-cash').on('input', function () {
+		let raw = $(this).val();
+		let formatted = formatToRupiah(raw);
+		$(this).val(formatted);
+
+		let total = {{ str_replace('.', '', Cart::subtotal()) }};
+		let cash = cleanRupiah(formatted);
+		let change = cash - total;
+
+		$('#change-amount').text(formatToRupiah(change > 0 ? change.toString() : '0'));
+	});
+
+	$('#customer-cash').on('keypress', function (e) {
+		if (!/[0-9]/.test(e.key)) {
+			e.preventDefault();
+		}
+	});
+
+	$('#customer-cash').on('input', function () {
+		let raw = $(this).val();
+		let formatted = formatToRupiah(raw);
+		$(this).val(formatted);
+
+		let total = {{ str_replace('.', '', Cart::subtotal()) }};
+		let cash = cleanRupiah(formatted);
+		let change = cash - total;
+
+		$('#change-amount').text(formatToRupiah(change > 0 ? change.toString() : '0'));
+
+		$('#cash-paid-hidden').val(cash);
+		$('#change-hidden').val(change > 0 ? change : 0);
+	});
+
 	$('.add-to-cart').click(function () {
 		const data = {
 			id: $(this).data('id'),
@@ -335,12 +396,14 @@ $(document).ready(function() {
 
 	$('#open-receipt').click(function () {
 		let customerName = $('#select2-customer-select-container').text().trim();
+		if (!customerName) customerName = '-';
 
-		if (!customerName) {
-			customerName = '—';
-		}
+		let cashPaid = $('#customer-cash').val().trim();
+		let change = $('#change-amount').text().trim();
 
 		$('#receipt-customer-name').text(customerName);
+		$('#receipt-cash-paid').text(cashPaid || 'Rp 0');
+		$('#receipt-change').text(change || 'Rp 0');
 	});
 
 	$('#submit-invoice-btn').on('click', function () {
@@ -463,6 +526,33 @@ $(document).ready(function() {
 			document.getElementById('barcode-input').focus();
 		}
 	}, 2000);
+
+	$('#submit-invoice-direct').on('click', function () {
+		let selectedCustomerId = $('#customer-select').val();
+
+		if (!selectedCustomerId) {
+			Swal.fire({
+				icon: 'warning',
+				title: 'Pilih pelanggan terlebih dahulu.'
+			});
+			return;
+		}
+
+		let cashPaid = $('#customer-cash').val().trim();
+		let change = $('#change-amount').text().trim();
+		let cleanCash = cashPaid.replace(/[^\d]/g, '') || '0';
+		let cleanChange = change.replace(/[^\d]/g, '') || '0';
+
+		$('#invoice-customer-id').val(selectedCustomerId);
+		$('#cash-paid-hidden').val(cleanCash);
+		$('#change-hidden').val(cleanChange);
+
+		$('#create-invoice-form').submit();
+
+		setTimeout(function () {
+			window.location.href = "{{ route('cart.clear') }}";
+		}, 2000);
+	});
 });
 </script>
 
@@ -478,7 +568,7 @@ $(document).ready(function() {
 					</div>
 					<h4>Pembayaran Selesai</h4>
 					<div class="modal-footer d-sm-flex justify-content-between">
-						<button type="button" class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#print-receipt">Cetak Resi<i class="feather-arrow-right-circle icon-me-5"></i></button>
+						<button type="button" id="submit-invoice-direct" class="btn btn-primary flex-fill">Cetak Resi<i class="feather-arrow-right-circle icon-me-5"></i></button>
 						<button type="button" id="submit-invoice-and-continue" class="btn btn-secondary flex-fill">Pembelian Selanjutnya<i class="feather-arrow-right-circle icon-me-5"></i></button>
 					</div>
 				</form>
@@ -549,8 +639,12 @@ $(document).ready(function() {
 										<td class="text-end">Rp {{ number_format($total, 0, ',', '.') }}</td>
 									</tr>
 									<tr>
-										<td>Total Payable :</td>
-										<td class="text-end">Rp {{ number_format($total, 0, ',', '.') }}</td>
+										<td>Cash Paid :</td>
+										<td class="text-end" id="receipt-cash-paid">Rp 0</td>
+									</tr>
+									<tr>
+										<td><strong>Change :</strong></td>
+										<td class="text-end" id="receipt-change"><strong>Rp 0</strong></td>
 									</tr>
 								</table>
 							</td>
@@ -572,6 +666,8 @@ $(document).ready(function() {
 <form id="create-invoice-form" method="POST" action="{{ url('/create-invoice') }}" target="_blank" style="display: none;">
     @csrf
     <input type="hidden" name="customer_id" id="invoice-customer-id">
+	<input type="hidden" name="cash_paid" id="cash-paid-hidden">
+	<input type="hidden" name="change_amount" id="change-hidden">
 </form>
 
 @endsection
