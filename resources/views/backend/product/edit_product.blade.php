@@ -232,6 +232,12 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        $('input[name="product_code"]').on('keypress', function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                $('input[name="buying_price"]').focus();
+            }
+        });
         $('#image').change(function(e){
             var reader = new FileReader();
             reader.onload = function(e){
