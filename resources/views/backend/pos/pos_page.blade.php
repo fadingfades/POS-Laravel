@@ -7,8 +7,11 @@
 	.product-img {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 8px;
 		flex-wrap: wrap;
+		width: 80px;
+		height: 80px;
 	}
 
 	.img-201 {
@@ -16,30 +19,8 @@
 		height: 80px !important;
 		border-radius: 5%;
 		object-fit: contain;
-		flex-shrink: 0; /* Prevents shrinking in flex containers */
+		flex-shrink: 0;
 		display: block;
-	}
-
-	.product-img {
-		width: 80px;
-		height: 80px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.img-203 {
-		width: 40px !important;
-		height: 35px !important;
-		border-radius: 2%;
-		object-fit: cover;
-	}
-
-	.img-204 {
-		width: 40px !important;
-		height: 40px !important;
-		border-radius: 100%;
-		object-fit: cover;
 	}
 
 	.product-display {
@@ -252,308 +233,301 @@
 				</div>
 
 <script>
-$(document).ready(function() {
-	function formatToRupiah(angka) {
-		let number_string = angka.replace(/[^,\d]/g, '').toString();
-		let split = number_string.split(',');
-		let sisa = split[0].length % 3;
-		let rupiah = split[0].substr(0, sisa);
-		let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+	$(document).ready(function() {
+		function formatToRupiah(angka) {
+			let number_string = angka.replace(/[^,\d]/g, '').toString();
+			let split = number_string.split(',');
+			let sisa = split[0].length % 3;
+			let rupiah = split[0].substr(0, sisa);
+			let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-		if (ribuan) {
-			let separator = sisa ? '.' : '';
-			rupiah += separator + ribuan.join('.');
+			if (ribuan) {
+				let separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+
+			return 'Rp ' + rupiah;
 		}
 
-		return 'Rp ' + rupiah;
-	}
-
-	function cleanRupiah(rpString) {
-		return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
-	}
-
-	$('#customer-cash').on('input', function () {
-		let raw = $(this).val();
-		let formatted = formatToRupiah(raw);
-		$(this).val(formatted);
-
-		let total = {{ str_replace('.', '', Cart::subtotal()) }};
-		let cash = cleanRupiah(formatted);
-		let change = cash - total;
-
-		$('#change-amount').text(formatToRupiah(change > 0 ? change.toString() : '0'));
-	});
-
-	$('#customer-cash').on('keypress', function (e) {
-		if (!/[0-9]/.test(e.key)) {
-			e.preventDefault();
+		function cleanRupiah(rpString) {
+			return parseInt(rpString.replace(/[^\d]/g, '')) || 0;
 		}
-	});
 
-	$('#customer-cash').on('input', function () {
-		let raw = $(this).val();
-		let formatted = formatToRupiah(raw);
-		$(this).val(formatted);
+		$('#customer-cash').on('input', function () {
+			let raw = $(this).val();
+			let formatted = formatToRupiah(raw);
+			$(this).val(formatted);
 
-		let total = {{ str_replace('.', '', Cart::subtotal()) }};
-		let cash = cleanRupiah(formatted);
-		let change = cash - total;
+			let total = {{ str_replace('.', '', Cart::subtotal()) }};
+			let cash = cleanRupiah(formatted);
+			let change = cash - total;
 
-		$('#change-amount').text(formatToRupiah(change > 0 ? change.toString() : '0'));
+			$('#change-amount').text(formatToRupiah(change > 0 ? change.toString() : '0'));
+			$('#cash-paid-hidden').val(cash);
+			$('#change-hidden').val(change > 0 ? change : 0);
+		});
 
-		$('#cash-paid-hidden').val(cash);
-		$('#change-hidden').val(change > 0 ? change : 0);
-	});
-
-	$('.add-to-cart').click(function () {
-		const data = {
-			id: $(this).data('id'),
-			name: $(this).data('name'),
-			price: $(this).data('price'),
-			qty: 1,
-			_token: '{{ csrf_token() }}'
-		};
-
-		$.post("{{ url('/add-cart') }}", data)
-			.done(function (response) {
-				Swal.fire({
-					icon: 'success',
-					title: 'Berhasil',
-					text: response.message,
-					timer: 1200,
-					showConfirmButton: false
-				}).then(() => location.reload());
-			})
-			.fail(function (xhr) {
-				let response = xhr.responseJSON;
-				Swal.fire({
-					icon: 'error',
-					title: 'Gagal',
-					text: response?.message || 'Gagal menambahkan produk!'
-				});
-			});
-	});
-
-	$(document).on('click', '.confirm-text', function (e) {
-		e.preventDefault();
-
-		let url = $(this).data('url');
-
-		Swal.fire({
-			title: "Apakah Anda yakin?",
-			text: "Anda tidak akan bisa membatalkannya!",
-			type: "warning",
-			showCancelButton: !0,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: "Hapus",
-			confirmButtonClass: "btn btn-primary",
-			cancelButtonClass: "btn btn-danger ml-1",
-			buttonsStyling: !1,
-		}).then((result) => {
-			if (result.isConfirmed) {
-				window.location.href = url;
+		$('#customer-cash').on('keypress', function (e) {
+			if (!/[0-9]/.test(e.key)) {
+				e.preventDefault();
 			}
 		});
-	});
 
-	$(".inc, .dec").off("click");
-
-	$(".inc").on("click", function () {
-		let $input = $(this).siblings('input[name="qty"]');
-		let qty = parseInt($input.val()) || 0;
-		let newQty = qty + 1;
-		updateCartQuantity($input, newQty);
-	});
-
-	$(".dec").on("click", function () {
-		let $input = $(this).siblings('input[name="qty"]');
-		let qty = parseInt($input.val()) || 0;
-		let newQty = qty > 1 ? qty - 1 : 1;
-		updateCartQuantity($input, newQty);
-	});
-
-	function updateCartQuantity($input, qty) {
-		let rowId = $input.data('rowid');
-		if (!rowId) return;
-
-		$.ajax({
-			url: `/cart-update/${rowId}`,
-			method: "POST",
-			data: {
-				qty: qty,
+		$('.add-to-cart').click(function () {
+			const data = {
+				id: $(this).data('id'),
+				name: $(this).data('name'),
+				price: $(this).data('price'),
+				qty: 1,
 				_token: '{{ csrf_token() }}'
-			},
-			success: function (response) {
-				$input.val(qty);
-				location.reload();
-			},
-			error: function () {
-				alert('Gagal memperbarui jumlah produk.');
-			}
-		});
-	}
+			};
 
-	$('#open-receipt').click(function () {
-		let customerName = $('#select2-customer-select-container').text().trim();
-		if (!customerName) customerName = '-';
-
-		let cashPaid = $('#customer-cash').val().trim();
-		let change = $('#change-amount').text().trim();
-
-		$('#receipt-customer-name').text(customerName);
-		$('#receipt-cash-paid').text(cashPaid || 'Rp 0');
-		$('#receipt-change').text(change || 'Rp 0');
-	});
-
-	$('#submit-invoice-btn').on('click', function () {
-		let selectedCustomerId = $('#customer-select').val();
-
-		if (!selectedCustomerId) {
-			alert('Pilih pelanggan terlebih dahulu.');
-			return;
-		}
-
-		$('#invoice-customer-id').val(selectedCustomerId);
-
-		$('#create-invoice-form').submit();
-		setTimeout(function () {
-			window.location.href = "{{ route('cart.clear') }}";
-		}, 2000);
-	});
-
-	$('#submit-invoice-and-continue').on('click', function () {
-		let selectedCustomerId = $('#customer-select').val();
-
-		if (!selectedCustomerId) {
-			alert('Pilih pelanggan terlebih dahulu.');
-			return;
-		}
-
-		$('#invoice-customer-id').val(selectedCustomerId);
-
-		$.ajax({
-			url: "{{ url('/create-invoice') }}",
-			method: "POST",
-			data: $('#create-invoice-form').serialize(),
-			headers: {
-				'X-CSRF-TOKEN': '{{ csrf_token() }}'
-			},
-			success: function () {
-				window.location.href = "{{ route('cart.clear') }}";
-			},
-			error: function () {
-				Swal.fire({
-					icon: 'error',
-					title: 'Gagal',
-					text: 'Gagal menyelesaikan transaksi.'
-				});
-			}
-		});
-	});
-
-	const barcodeInput = document.getElementById('barcode-input');
-
-	function focusBarcodeInput() {
-		if (document.activeElement !== barcodeInput) {
-			barcodeInput.focus({ preventScroll: true });
-		}
-	}
-
-	focusBarcodeInput();
-
-	document.addEventListener('keydown', (e) => {
-		const tag = document.activeElement.tagName;
-		if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
-			focusBarcodeInput();
-		}
-	});
-
-	barcodeInput.addEventListener('keypress', function (e) {
-		if (e.key === 'Enter') {
-			const code = barcodeInput.value.trim();
-			if (code !== '') {
-				addProductToCartByBarcode(code);
-				barcodeInput.value = '';
-			}
-		}
-	});
-
-	function addProductToCartByBarcode(code) {
-		$.ajax({
-			url: '{{ url("/find-product-by-code") }}',
-			method: 'GET',
-			data: { code: code },
-			success: function (product) {
-				const data = {
-					id: product.id,
-					name: product.product_name,
-					price: product.selling_price,
-					qty: 1,
-					_token: '{{ csrf_token() }}'
-				};
-
-				$.post("{{ url('/add-cart') }}", data)
-					.done(function (response) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Produk Ditambahkan',
-							text: response.message,
-							timer: 1000,
-							showConfirmButton: false
-						}).then(() => location.reload());
-					})
-					.fail(() => {
-						Swal.fire({
-							icon: 'error',
-							title: 'Gagal Menambahkan Produk'
-						});
+			$.post("{{ url('/add-cart') }}", data)
+				.done(function (response) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Berhasil',
+						text: response.message,
+						timer: 1200,
+						showConfirmButton: false
+					}).then(() => location.reload());
+				})
+				.fail(function (xhr) {
+					let response = xhr.responseJSON;
+					Swal.fire({
+						icon: 'error',
+						title: 'Gagal',
+						text: response?.message || 'Gagal menambahkan produk!'
 					});
-			},
-			error: function () {
-				Swal.fire({
-					icon: 'error',
-					title: 'Produk Tidak Ditemukan',
-					text: `Kode: ${code}`
 				});
+		});
+
+		$(document).on('click', '.confirm-text', function (e) {
+			e.preventDefault();
+
+			let url = $(this).data('url');
+
+			Swal.fire({
+				title: "Apakah Anda yakin?",
+				text: "Anda tidak akan bisa membatalkannya!",
+				type: "warning",
+				showCancelButton: !0,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Hapus",
+				confirmButtonClass: "btn btn-primary",
+				cancelButtonClass: "btn btn-danger ml-1",
+				buttonsStyling: !1,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = url;
+				}
+			});
+		});
+
+		let debounceTimers = {};
+
+		function updateCartQuantityDebounced($input, qty) {
+			let rowId = $input.data('rowid');
+			if (!rowId) return;
+
+			clearTimeout(debounceTimers[rowId]);
+
+			debounceTimers[rowId] = setTimeout(() => {
+				$.ajax({
+					url: `/cart-update/${rowId}`,
+					method: "POST",
+					data: {
+						qty: qty,
+						_token: '{{ csrf_token() }}'
+					},
+					success: function () {
+						$input.val(qty);
+						location.reload();
+					},
+					error: function () {
+						alert('Gagal memperbarui jumlah produk.');
+					}
+				});
+			}, 500);
+		}
+
+		$(".inc").on("click", function () {
+			let $input = $(this).siblings('input[name="qty"]');
+			let qty = parseInt($input.val()) || 0;
+			let newQty = qty + 1;
+			$input.val(newQty);
+			updateCartQuantityDebounced($input, newQty);
+		});
+
+		$(".dec").on("click", function () {
+			let $input = $(this).siblings('input[name="qty"]');
+			let qty = parseInt($input.val()) || 0;
+			let newQty = qty > 1 ? qty - 1 : 1;
+			$input.val(newQty);
+			updateCartQuantityDebounced($input, newQty);
+		});
+
+		$('#open-receipt').click(function () {
+			let customerName = $('#select2-customer-select-container').text().trim();
+			if (!customerName) customerName = '-';
+
+			let cashPaid = $('#customer-cash').val().trim();
+			let change = $('#change-amount').text().trim();
+
+			$('#receipt-customer-name').text(customerName);
+			$('#receipt-cash-paid').text(cashPaid || 'Rp 0');
+			$('#receipt-change').text(change || 'Rp 0');
+		});
+
+		$('#submit-invoice-btn').on('click', function () {
+			let selectedCustomerId = $('#customer-select').val();
+
+			if (!selectedCustomerId) {
+				alert('Pilih pelanggan terlebih dahulu.');
+				return;
+			}
+
+			$('#invoice-customer-id').val(selectedCustomerId);
+
+			$('#create-invoice-form').submit();
+			setTimeout(function () {
+				window.location.href = "{{ route('cart.clear') }}";
+			}, 2000);
+		});
+
+		$('#submit-invoice-and-continue').on('click', function () {
+			let selectedCustomerId = $('#customer-select').val();
+
+			if (!selectedCustomerId) {
+				alert('Pilih pelanggan terlebih dahulu.');
+				return;
+			}
+
+			$('#invoice-customer-id').val(selectedCustomerId);
+
+			$.ajax({
+				url: "{{ url('/create-invoice') }}",
+				method: "POST",
+				data: $('#create-invoice-form').serialize(),
+				headers: {
+					'X-CSRF-TOKEN': '{{ csrf_token() }}'
+				},
+				success: function () {
+					window.location.href = "{{ route('cart.clear') }}";
+				},
+				error: function () {
+					Swal.fire({
+						icon: 'error',
+						title: 'Gagal',
+						text: 'Gagal menyelesaikan transaksi.'
+					});
+				}
+			});
+		});
+
+		const barcodeInput = document.getElementById('barcode-input');
+
+		function focusBarcodeInput() {
+			if (document.activeElement !== barcodeInput) {
+				barcodeInput.focus({ preventScroll: true });
+			}
+		}
+
+		focusBarcodeInput();
+
+		document.addEventListener('keydown', (e) => {
+			const tag = document.activeElement.tagName;
+			if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+				focusBarcodeInput();
 			}
 		});
-	}
 
-	setInterval(() => {
-		const active = document.activeElement;
-		if (!active || (active.tagName !== 'INPUT' && active.tagName !== 'TEXTAREA' && active.tagName !== 'SELECT')) {
-			document.getElementById('barcode-input').focus();
-		}
-	}, 2000);
+		barcodeInput.addEventListener('keypress', function (e) {
+			if (e.key === 'Enter') {
+				const code = barcodeInput.value.trim();
+				if (code !== '') {
+					addProductToCartByBarcode(code);
+					barcodeInput.value = '';
+				}
+			}
+		});
 
-	$('#submit-invoice-direct').on('click', function () {
-		let selectedCustomerId = $('#customer-select').val();
+		function addProductToCartByBarcode(code) {
+			$.ajax({
+				url: '{{ url("/find-product-by-code") }}',
+				method: 'GET',
+				data: { code: code },
+				success: function (product) {
+					const data = {
+						id: product.id,
+						name: product.product_name,
+						price: product.selling_price,
+						qty: 1,
+						_token: '{{ csrf_token() }}'
+					};
 
-		if (!selectedCustomerId) {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Pilih pelanggan terlebih dahulu.'
+					$.post("{{ url('/add-cart') }}", data)
+						.done(function (response) {
+							Swal.fire({
+								icon: 'success',
+								title: 'Produk Ditambahkan',
+								text: response.message,
+								timer: 1000,
+								showConfirmButton: false
+							}).then(() => location.reload());
+						})
+						.fail(() => {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal Menambahkan Produk'
+							});
+						});
+				},
+				error: function () {
+					Swal.fire({
+						icon: 'error',
+						title: 'Produk Tidak Ditemukan',
+						text: `Kode: ${code}`
+					});
+				}
 			});
-			return;
 		}
 
-		let cashPaid = $('#customer-cash').val().trim();
-		let change = $('#change-amount').text().trim();
-		let cleanCash = cashPaid.replace(/[^\d]/g, '') || '0';
-		let cleanChange = change.replace(/[^\d]/g, '') || '0';
-
-		$('#invoice-customer-id').val(selectedCustomerId);
-		$('#cash-paid-hidden').val(cleanCash);
-		$('#change-hidden').val(cleanChange);
-
-		$('#create-invoice-form').submit();
-
-		setTimeout(function () {
-			window.location.href = "{{ route('cart.clear') }}";
+		setInterval(() => {
+			const active = document.activeElement;
+			if (!active || (active.tagName !== 'INPUT' && active.tagName !== 'TEXTAREA' && active.tagName !== 'SELECT')) {
+				document.getElementById('barcode-input').focus();
+			}
 		}, 2000);
+
+		$('#submit-invoice-direct').on('click', function () {
+			let selectedCustomerId = $('#customer-select').val();
+
+			if (!selectedCustomerId) {
+				Swal.fire({
+					icon: 'warning',
+					title: 'Pilih pelanggan terlebih dahulu.'
+				});
+				return;
+			}
+
+			let cashPaid = $('#customer-cash').val().trim();
+			let change = $('#change-amount').text().trim();
+			let cleanCash = cashPaid.replace(/[^\d]/g, '') || '0';
+			let cleanChange = change.replace(/[^\d]/g, '') || '0';
+
+			$('#invoice-customer-id').val(selectedCustomerId);
+			$('#cash-paid-hidden').val(cleanCash);
+			$('#change-hidden').val(cleanChange);
+
+			$('#create-invoice-form').submit();
+
+			setTimeout(function () {
+				window.location.href = "{{ route('cart.clear') }}";
+			}, 2000);
+		});
 	});
-});
 </script>
 
 <div class="modal fade modal-default" id="payment-completed" aria-labelledby="payment-completed">

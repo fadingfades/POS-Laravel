@@ -9,6 +9,7 @@ use App\Models\Customer;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Transaction;
 use App\Models\Sale;
+use Illuminate\Support\Str;
 
 class PosController extends Controller
 {
@@ -87,6 +88,8 @@ class PosController extends Controller
         $cashPaid = (int) $request->cash_paid;
         $changeAmount = (int) $request->change_amount;
 
+        $receiptNumber = 'INV-' . now()->format('Ymd') . '-' . Str::upper(Str::random(6));
+
         $transaction = Transaction::create([
             'customer_id' => $cust_id,
             'total_amount' => $totalAmount,
@@ -110,7 +113,7 @@ class PosController extends Controller
             }
         }
 
-        return view('backend.invoice.product_invoice', compact('contents', 'customer', 'totalAmount', 'cashPaid', 'changeAmount'));
+        return view('backend.invoice.product_invoice', compact('contents', 'customer', 'totalAmount', 'cashPaid', 'changeAmount', 'receiptNumber'));
     }
 
     public function FindProductByCode(Request $request)

@@ -1949,17 +1949,17 @@ $(document).ready(function(){
 
 	// Increment Decrement
 
-	$(".inc").on('click', function() {
-	    updateValue(this, 1);
-	});
-	$(".dec").on('click', function() {
-	    updateValue(this, -1);
-	});
-	function updateValue(obj, delta) {
-	    var item = $(obj).parent().find("input");
-	    var newValue = parseInt(item.val(), 10) + delta;
-	    item.val(Math.max(newValue, 0));
-	}
+	// $(".inc").on('click', function() {
+	//     updateValue(this, 1);
+	// });
+	// $(".dec").on('click', function() {
+	//     updateValue(this, -1);
+	// });
+	// function updateValue(obj, delta) {
+	//     var item = $(obj).parent().find("input");
+	//     var newValue = parseInt(item.val(), 10) + delta;
+	//     item.val(Math.max(newValue, 0));
+	// }
 
 	
 

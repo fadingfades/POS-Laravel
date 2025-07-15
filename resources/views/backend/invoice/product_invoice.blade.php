@@ -77,7 +77,7 @@
         <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d.m.Y') }}</div>
     </div>
 
-    <strong class="text-center">Resi Pembelian</strong>
+    <strong class="text-center">Resi Pembelian: {{ $receiptNumber ?? '-' }}</strong>
 
     <table>
         <thead>
