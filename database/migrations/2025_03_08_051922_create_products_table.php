@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('product_store')->nullable();
             $table->string('buying_date')->nullable();
             $table->string('expire_date')->nullable();
-            $table->string('buying_price')->nullable();
-            $table->string('selling_price')->nullable();
+            $table->integer('selling_price', 11);
+            $table->integer('buying_price', 11);
             $table->timestamps();
         });
     }

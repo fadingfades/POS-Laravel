@@ -28,6 +28,20 @@ class ProductController extends Controller
     }
 
     public function StoreProduct(Request $request){
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|integer',
+            'supplier_id' => 'required|integer',
+            'product_code' => 'required|string|max:255',
+            'product_garage' => 'nullable|string|max:255',
+            'product_store' => 'nullable|string|max:255',
+            'buying_date' => 'nullable|date',
+            'expire_date' => 'nullable|date',
+            'buying_price' => 'required|numeric',
+            'selling_price' => 'required|numeric',
+            'product_image' => 'required|image',
+        ]);
+
         $image = $request->file('product_image');
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
         Image::read($image)->resize(300,300)->save('upload/product/'.$name_gen);
@@ -67,6 +81,20 @@ class ProductController extends Controller
 
     public function UdateProduct(Request $request){
         $product_id = $request->id;
+
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|integer',
+            'supplier_id' => 'required|integer',
+            'product_code' => 'required|string|max:255',
+            'product_garage' => 'nullable|string|max:255',
+            'product_store' => 'nullable|string|max:255',
+            'buying_date' => 'nullable|date',
+            'expire_date' => 'nullable|date',
+            'buying_price' => 'required|numeric',
+            'selling_price' => 'required|numeric',
+            'product_image' => 'nullable|image',
+        ]);
 
         if ($request->file('product_image')) {
 
